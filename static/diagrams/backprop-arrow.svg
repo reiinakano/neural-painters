@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="9px" viewBox="0 0 27 9" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 49.1 (51147) - http://www.bohemiancoding.com/sketch -->
+    <title>backprop-arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="backprop-arrow" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Backprop-Arrow">
+            <g id="Group" transform="translate(-0.195652, 0.000000)">
+                <path d="M10.5,4.5 L26.8913043,4.5" id="Line-Copy" stroke="#FF6600" stroke-width="2" stroke-linecap="square" stroke-dasharray="6,4"></path>
+                <g id="Arrow-Head-Copy" transform="translate(5.000000, 4.500000) scale(-1, 1) translate(-5.000000, -4.500000) translate(0.500000, 0.000000)" fill="#FF6600" fill-rule="nonzero">
+                    <path d="M4.5,0 C5.67007294,3.25202425 6.85281213,6.29180565 9,9 L4.5,7.3125 L0,9 C2.13530145,6.28972675 3.34126793,3.24998975 4.5,0 Z" id="Shape" transform="translate(4.500000, 4.500000) rotate(-270.000000) translate(-4.500000, -4.500000) "></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

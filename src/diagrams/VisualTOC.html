@@ -1,0 +1,147 @@
+<nav class="visual-toc">
+  {#each sections as section, i}
+  <div class="visual-toc-item">
+    <a href="{section.anchor}" class="visual-toc-top">
+      <Sprite url='images/vtoc.jpg' width=320 columns=3 index={section.sprite_index}/>
+      <span class="visual-toc-heading">{section.title}</span>
+      {#if section.subtitle}
+        <span class="visual-toc-subheading">{section.subtitle}</span>
+      {/if}
+    </a>
+    <a href="{section.colab_url}" class="visual-toc-colab">
+      try in a <img alt="Colab" src="images/colab.svg"> notebook
+    </a>
+  </div>
+  {/each}
+</nav>
+
+
+<style>
+.visual-toc {
+  counter-reset: toc-heading;
+  display: grid;
+  grid-auto-flow: dense;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 16px;
+}
+@media (min-width: 1000px) {
+  .visual-toc {
+    grid-gap: 8px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  }
+}
+@media (min-width: 1180px) {
+  .visual-toc {
+    grid-gap: 20px;
+  }
+}
+.visual-toc-item {
+  display: flex;
+  flex-flow: column;
+}
+.visual-toc-top {
+  flex-grow: 1;
+  border: 1px solid #E5E5E5;
+  border-radius: 5px;
+  overflow: hidden;
+  text-decoration: none;
+  /* box-shadow: 0px 1px 4px rgba(0,0,0,0.05); */
+  transition: box-shadow 0.35s, transform 0.35s;
+  transform: scale(1.0);
+  display: flex;
+  flex-flow: column;
+}
+.visual-toc-top:hover {
+  box-shadow: 0px 1px 4px rgba(0,0,0,0.05);
+  transform: scale(1.02);
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.visual-toc-heading,
+.visual-toc-subheading {
+  display: block;
+  line-height: 1.3em;
+  font-size: 85%;
+  padding: 0.5em 1em 1em 1em;
+}
+.visual-toc-heading {
+  counter-increment: toc-heading;
+  color: #333;
+  font-weight: 600;
+}
+.visual-toc-heading::before{
+  display: block;
+  content: "Section " counter(toc-heading);
+  font-weight: 400;
+  text-transform: uppercase;
+  font-size: 0.6rem;
+  color: #666;
+}
+.visual-toc-subheading {
+  display: none;
+  color: #666;
+  font-size: 75%;
+}
+.visual-toc-colab {
+  border-radius: 5px;
+  border: dashed 1px rgba(0,0,0,0.1);
+  margin-top: 1em;
+  padding-left: 1.2em;
+  padding-right: 1.2em;
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+  text-transform: uppercase;
+  color: #aaa;
+  font-size: 10.5px;
+  line-height: 24px;
+
+}
+.visual-toc-colab > img {
+  position: relative;
+  top: 4px;
+  /* filter: grayscale(); */
+}
+.visual-toc-item:hover .visual-toc-colab > img {
+  filter: unset;
+}
+
+/* .visual-toc-top:hover,  */
+.visual-toc-colab:hover {
+  background-color: hsl(0, 0%, 97%);
+  border-color: rgba(0,0,0,0.2);
+  color: #888;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a :global(canvas) {
+  width: 100%;
+}
+</style>
+
+
+<script>
+import { range } from "../util";
+import { Sprite } from "lucid-components";
+
+export default {
+  data() {
+    return {
+      sections: [
+        { title: "Example Section with image", colab_url: "", anchor: "#experiment-aligned", sprite_index: 0  },
+        { title: "Example Section with image-VGG", colab_url: "", anchor: "#experiment-styletransfer", sprite_index: 1 },
+        { title: "Example Section with image", colab_url: "", anchor: "#experiment-xy2rgb", sprite_index: 3 },
+        { title: "Example Section with image", colab_url: "", anchor: "#experiment-featureviz-rgba", sprite_index: 2 },
+        { title: "Example Section with image", colab_url: "", anchor: "#experiment-featureviz-3d", sprite_index: 4 },
+        { title: "Example Section with image", colab_url: "", anchor: "#experiment-styletransfer-3d", sprite_index: 5 },
+      ]
+    }
+  },
+  components: { Sprite },
+  helpers: { range },
+}
+</script>
+

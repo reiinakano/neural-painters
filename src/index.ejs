@@ -1,0 +1,103 @@
+<!doctype html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://distill.pub/template.v2.js"></script>
+  <style><%= require("raw-loader!../static/style.css") %></style>
+</head>
+
+<body>
+
+<d-front-matter>
+  <script type="text/json">{
+  "title": "Example Distill Submission",
+  "description": "An example project using webpack and svelte-loader and ejs to inline SVGs",
+  "password": "svgs",
+  "authors": [
+    {
+      "author": "Ludwig Schubert",
+      "authorURL": "https://schubert.io/",
+      "affiliation": "Google Brain Team",
+      "affiliationURL": "https://g.co/brain"
+    }
+  ],
+  "katex": {
+    "delimiters": [
+      {
+        "left": "$",
+        "right": "$",
+        "display": false
+      },
+      {
+        "left": "$$",
+        "right": "$$",
+        "display": true
+      }
+    ]
+  }
+  }</script>
+</d-front-matter>
+
+<d-title></d-title>
+
+<d-article>
+
+  <p>
+    Typically, we parameterize the input image as the RGB values of each pixel.
+    But that isn’t the only way to parameterize images.
+    And, as long as the mapping from parameters to images is differentiable, we can still optimize alternative parameterizations with gradient descent.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      <!-- <span class="figure-number">Figure 1:</span> -->
+      <span style="hyphens: manual;">As long as an </span>
+      <span style="background-color: #FFF1E7; padding-left: 2px; padding-right: 2px;">image para&shy;meter&shy;ization</span>
+      <span>is differ&shy;entiable, we can back&shy;propagate</span>
+      <span style="white-space: nowrap;">( <img src="diagrams/backprop-arrow.svg" style="width: unset;"/> )</span>
+      <span>through it.</span>
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+    <d-footnote>Test! Let's cite<d-cite key="gatys2015"></d-cite> someone!</d-footnote>
+    More text!
+  </p> 
+
+</d-article>
+
+
+
+<d-appendix>
+  <h3>Acknowledgments</h3>
+  <p>
+    We are deeply grateful to...
+  </p>
+
+  <p>
+    Many of our diagrams are based on...
+  </p>
+
+  <h3>Author Contributions</h3>
+  <p>
+    <b>Research:</b> Alex developed ...
+  </p>
+
+  <p>
+    <b>Writing & Diagrams:</b> The text was initially drafted by...
+  </p>
+
+
+  <d-footnote-list></d-footnote-list>
+  <d-citation-list></d-citation-list>
+</d-appendix>
+
+<!-- bibliography will be inlined during Distill pipeline's pre-rendering -->
+<d-bibliography src="bibliography.bib"></d-bibliography>
+
+</body>
