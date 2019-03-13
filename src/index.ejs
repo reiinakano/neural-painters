@@ -11,15 +11,15 @@
 
 <d-front-matter>
   <script type="text/json">{
-  "title": "Example Distill Submission",
-  "description": "An example project using webpack and svelte-loader and ejs to inline SVGs",
+  "title": "something",
+  "description": "some other thing",
   "password": "svgs",
   "authors": [
     {
-      "author": "Ludwig Schubert",
-      "authorURL": "https://schubert.io/",
-      "affiliation": "Google Brain Team",
-      "affiliationURL": "https://g.co/brain"
+      "author": "Reiichiro Nakano",
+      "authorURL": "https://reiinakano.github.io/",
+      "affiliation": "",
+      "affiliationURL": ""
     }
   ],
   "katex": {
@@ -39,7 +39,11 @@
   }</script>
 </d-front-matter>
 
-<d-title></d-title>
+<d-title>
+  <h1>Something</h1>
+  <p>something something</p>
+  <div class="l-page" id="vtoc"></div>
+</d-title>
 
 <d-article>
 
@@ -68,6 +72,56 @@
     <d-footnote>Test! Let's cite<d-cite key="gatys2015"></d-cite> someone!</d-footnote>
     More text!
   </p> 
+
+  <hr/>
+  <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
+    <a href="#section-training-painter-networks" class="section-number">1</a>
+  </p>
+  <h2 id="section-training-painter-networks"><a href="#section-training-painter-networks">Training Painter Networks</a></h2>
+
+  <p>
+    Lorem impsum.
+    Dolor.
+  </p>
+
+  <hr/>
+  <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
+    <a href="#section-recreating-spiral" class="section-number">2</a>
+  </p>
+  <h2 id='section-recreating-spiral'><a href="#section-recreating-spiral">Recreating SPIRAL results</a></h2>
+
+  <p>
+    Lorem impsum.
+    Dolor.
+  </p>
+
+  <hr/>
+  <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
+    <a href="#section-discrete-actions" class="section-number">3</a>
+  </p>
+  <h2 id='section-discrete-actions'><a href="#section-discrete-actions">The Effect of Discrete Actions</a></h2>
+
+  <p>
+    Lorem impsum.
+    Dolor.
+  </p>
+
+  <hr/>
+  <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
+    <a href="#section-expert-teaching" class="section-number">4</a>
+  </p>
+  <h2 id='section-expert-teaching'><a href="#section-expert-teaching">Learning Human Strokes</a></h2>
+
+  <p>
+    Lorem impsum.
+    Dolor.
+  </p>
+
+  <hr/>
+  <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
+    <a href="#section-diff-image-param" class="section-number">5</a>
+  </p>
+  <h2 id='section-diff-image-param'><a href="#section-diff-image-param">As a Differentiable Image Parameterization</a></h2>
 
 </d-article>
 
