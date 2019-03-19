@@ -40,17 +40,15 @@
 </d-front-matter>
 
 <d-title>
-  <h1>Something</h1>
-  <p>something something</p>
+  <h1>Neural Painters</h1>
+  <p>Title is a work in progress</p>
   <div class="l-page" id="vtoc"></div>
 </d-title>
 
 <d-article>
 
   <p>
-    Typically, we parameterize the input image as the RGB values of each pixel.
-    But that isn’t the only way to parameterize images.
-    And, as long as the mapping from parameters to images is differentiable, we can still optimize alternative parameterizations with gradient descent.
+    This post explores neural painters' strengths and weaknesses, training methods, and some interesting things that can be achieved with them.
   </p>
 
   <figure class="subgrid">
@@ -80,9 +78,33 @@
   <h2 id="section-training-painter-networks"><a href="#section-training-painter-networks">Training Painter Networks</a></h2>
 
   <p>
-    Lorem impsum.
-    Dolor.
+    This section shows two approaches for training a neural painter based on a real painting program, <a href="http://mypaint.org">MyPaint</a>. 
+    It begins with a description of the action space for a brush stroke: starting point, end point, control point, brush size, pressure, color. 
   </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      The user is allowed to move the various knobs and see how the action space defines a full brushstroke. 
+      Unless there's a good way to run a C++ library on the browser (MyPaint), then the images will presumably be fetched from somewhere as the knobs move.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    The first approach for training a neural painter uses two stages: train a VAE on brush strokes to learn a latent space for brush strokes, then train a feedforward neural network to map an action to the latent space.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Simple animated GIF or MP4 of a real brushstroke (left) and the neurally generated brushstroke (right) moving through the action space.
+      We can include the moving knobs in the animation like in Figure 2 of DiffParams article.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
@@ -97,18 +119,7 @@
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
-    <a href="#section-discrete-actions" class="section-number">3</a>
-  </p>
-  <h2 id='section-discrete-actions'><a href="#section-discrete-actions">The Effect of Discrete Actions</a></h2>
-
-  <p>
-    Lorem impsum.
-    Dolor.
-  </p>
-
-  <hr/>
-  <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
-    <a href="#section-expert-teaching" class="section-number">4</a>
+    <a href="#section-expert-teaching" class="section-number">3</a>
   </p>
   <h2 id='section-expert-teaching'><a href="#section-expert-teaching">Learning Human Strokes</a></h2>
 
@@ -119,7 +130,7 @@
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
-    <a href="#section-diff-image-param" class="section-number">5</a>
+    <a href="#section-diff-image-param" class="section-number">4</a>
   </p>
   <h2 id='section-diff-image-param'><a href="#section-diff-image-param">As a Differentiable Image Parameterization</a></h2>
 
