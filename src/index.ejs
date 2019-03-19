@@ -106,6 +106,24 @@
     </div>
   </figure>
 
+  <p>
+    The second approach trains a neural network directly from action space to brush stroke, using an adversarial loss. 
+    This results in more "realistic" brushstrokes as opposed to the smoothened out VAE brushstrokes.
+  </p>
+
+  <span id="figure-number-gan-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
+    <p><a href="#figure-gan-painter-exploration" class="figure-number">3</a></p>
+  </span>
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Simple animated GIF or MP4 of a real brushstroke (left) and the neurally generated brushstroke (right) moving through the action space.
+      We can include the moving knobs in the animation like in Figure 2 of DiffParams article.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
     <a href="#section-recreating-spiral" class="section-number">2</a>
