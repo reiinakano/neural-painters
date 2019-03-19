@@ -131,9 +131,96 @@
   <h2 id='section-recreating-spiral'><a href="#section-recreating-spiral">Recreating SPIRAL results</a></h2>
 
   <p>
-    Lorem impsum.
-    Dolor.
+    The SPIRAL paper trained an agent to learn to recreate images from a particular domain (MNIST, Omniglot, CelebA) using a constrained action space (the painting program). 
+    As the painting program is non-differentiable, the agent is trained using adversarial reinforcement learning.
   </p>
+
+  <p> 
+    Since a neural painter is fully differentiable, we don't need reinforcement learning, and can just train the agent using regular adversarial methods. 
+    We test the approach's performance on three datasets: MNIST, KMNIST, and CelebA, and show the results.
+  </p>
+
+  <p>
+    We begin with MNIST.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      The diagram shows three images side by side: one of the target image, one of the neural painter output produced by the agent, and finally, the same actions executed on the real painting program. 
+      The latter two images will be animated, showing the stroke order used to recreate the target image. 
+      There is a button that can be clicked to fetch a new set of images.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    Then KMNIST.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Same as MNIST diagram.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    Finally, we do CelebA.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      The diagram for CelebA should be almost the same as the diagrams for the previous two datasets. 
+      In addition to the button for fetching a new set of images, we add a button for toggling the output produced by the VAE vs GAN neural painter, and a slider for selecting the number of strokes.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    We end with an interesting interactive diagram.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      An interesting interactive diagram would be letting a user generate their own target image. 
+      For MNIST/KMNIST, the user could draw strokes as in the handwriting article. 
+      Alternatively, the user could upload an image or take a picture and the CelebA agent could attempt to draw it. 
+      This will only work if the agent and neural painter are small enough to be run on TF.js.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <h3>
+    The effect of discrete actions
+  </h3>
+
+  <p>
+    This is a short aside on discrete action spaces. 
+    So far, we've constrained the brushstroke action space to continuous variables. 
+    This is in contrast to the original SPIRAL paper, that used 10 discrete levels for representing brush pressure and a binary flag that determines whether the brush is lifted or not.
+  </p>
+
+  <p>
+    In this section, a neural painter trained with discrete actions is explored. 
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      This diagram shows the effect of lifting the brush "partially" (value between 0 and 1). 
+      An agent using this neural painter fails immediately (no strokes produced) when trained using the same adversarial method since the gradient caused by the jump action is not meaningful.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
