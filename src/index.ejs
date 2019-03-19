@@ -229,15 +229,74 @@
   <h2 id='section-expert-teaching'><a href="#section-expert-teaching">Learning Human Strokes</a></h2>
 
   <p>
-    Lorem impsum.
-    Dolor.
+    Previously, the agent can be observed to favor a particular stroke order e.g. top to bottom, left to right for MNIST digits. 
+    This section shows that if the agent is preconditioned on a specific stroke order (requires only one example per class), it learns to apply that stroke order when recreating other examples.
   </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      This is just an animated GIF of the strokes used to pre-condition the agent. 
+      Notice there is only one sample per class.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      This diagram is similar to the previous diagrams on recreating SPIRAL experiments. 
+      In addition to the "Load New Image" button, the user can select a conditional category used as input to the agent. 
+      This will affect the path the agent takes when attempting to recreate the digit.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
     <a href="#section-diff-image-param" class="section-number">4</a>
   </p>
   <h2 id='section-diff-image-param'><a href="#section-diff-image-param">As a Differentiable Image Parameterization</a></h2>
+
+  <p>
+    Since the neural painter is differentiable, it can be used as a differentiable image parameterization. 
+    The diagrams here will mostly mirror the ones from the Differentiable Image Parameterization article.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      This is a zoomable collection of pictures, similar to the CPPN example results in Figure 7 of the DiffParams article. 
+      One interesting addition could be a dropdown of categories. 
+      Upon selection of a category, all images change to an optimized "painting" of that category.
+      Zooming into one of the images could also show how it was generated e.g. number of strokes, VAE/GAN painter.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      We can show some videos of the optimization from a random initialization to end result.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+  
+  <hr/>
+
+  <h2 id='conclusions'><a href="#conclusions">Conclusions</a></h2>
+
+  <p>
+    Constraints are a key element of creativity. 
+    The natural constraints that an artistic medium imposes on the artist give a piece of art a distinct look from others. 
+    An artist attempting to paint a scene using oil paints will get a remarkably distinct result from someone trying to sketch the same scene using a single pencil. 
+    In the same sense, an agent constrained to use brush strokes will find creative ways to achieve its objective (recreate a digit, face, or maximize another neural network's activations). 
+    This article explored the power of neural painters as a differentiable constraint learned from a real painting simulator, but the techniques and ideas introduced can be applied to other mediums, perhaps 3D renderers or animations.
+  </p>
 
 </d-article>
 
