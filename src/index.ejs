@@ -75,16 +75,18 @@
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
     <a href="#section-training-painter-networks" class="section-number">1</a>
   </p>
-  <h2 id="section-training-painter-networks"><a href="#section-training-painter-networks">Training Painter Networks</a></h2>
+  <h2 id="section-training-painter-networks"><a href="#section-training-painter-networks">Training Neural Painters</a></h2>
 
   <p>
     The main role of a neural painter is to serve as a fully differentiable simulation of a particular painting program.
-    In this article, we use an open source painting program called <a href="http://mypaint.org">MyPaint</a>, which was also used by SPIRAL.
+    In this article, we use an open source painting program called <a href="http://mypaint.org">MyPaint</a>, which is the same program used by SPIRAL.
   </p>
 
   <p>
     There are two main considerations for training a neural painter, the painting program's <b>action space</b> and the neural painter's <b>architecture</b>.
   </p>
+
+  <h3>The Action Space</h3>
 
   <p>
     The <b>action space</b> defines the set of parameters that are used as control inputs for the painting environment.
@@ -92,7 +94,8 @@
   </p>
 
   <p>
-    For the experiments in this article, we use a slight variation of the action space used by SPIRAL, that maps a single action to a single brushstroke in the MyPaint program.
+    For the experiments in this article, we use a slight variation of the action space used by SPIRAL.
+    This action space maps a single action to a single brushstroke in the MyPaint program.
     An agent "paints" by successively generating actions and applying full brushstrokes on a canvas.
     The table below shows the variables that constitute the action space.
   </p>
@@ -124,7 +127,7 @@
   </table>
 
   <p>
-    The main difference of this action space from the one used by SPIRAL is that we avoid the use of discrete variables.
+    The main difference of this action space from the one used by SPIRAL is our avoidance of the use of discrete variables.
     Instead of using discrete variables for brush size and stroke pressure, we use continuous variables.
     We also drop the binary variable that determines whether or not to lift the brush.
     The reasoning behind this will be explained in more detail in a later section.
@@ -145,8 +148,37 @@
   </figure>
 
   <p>
-    The first approach for training a neural painter uses two stages: train a VAE on brush strokes to learn a latent space for brush strokes, then train a feedforward neural network to map an action to the latent space.
+    The second consideration in training a neural painter is the architecture. 
+    We need an appropriate architecture and training paradigm to learn an accurate mapping from a point in the action space to the corresponding brushstroke.
+    In this article, we consider two approaches for training a neural painter.
   </p>
+
+  <h3>Training a VAE Neural Painter</h3>
+
+  <p>
+    Our first approach is inspired by the two-stage method used by Ha, et al. to learn a world model for a particular environment
+    <d-footnote>A variational autoencoder is used to learn a latent space for all possible frames in an environment.
+    A recurrent neural network is then used to predict the next frame of an environment given an action.</d-footnote>.
+  </p>
+
+  <p>
+    A variational autoencoder is trained to learn a latent space of brushstrokes.
+    We then train a separate network to map an action to the point in latent space corresponding to the expected brushstroke.
+    Unlike the World Models paper, we do not need an RNN to map from actions to brushstrokes as there is no relationship between a brushstroke and the previous actions performed on the painting program.
+  </p>
+
+  <p>The diagram for the training process is shown below.</p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Static diagram for VAE neural painter architecture.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>The diagram below compares the results of a trained VAE neural painter with the real output of MyPaint.</p>
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
@@ -157,6 +189,18 @@
       <%= require("../static/diagrams/general.svg") %>
     </div>
   </figure>
+
+  <p>
+    The biggest weakness of the VAE neural painter is its "smudging" effect on the brushstrokes.
+    Instead of accurately recreating the dotted texture of the larger brushstrokes, the VAE chooses to smooth them out instead.
+    Depending on the task, this inaccuracy could lead to less than ideal results when we reuse an agent trained with the VAE neural painter on the real painting program.
+  </p>
+
+  <h3>Training a GAN Neural Painter</h3>
+
+  <p>
+    To solve this problem, we turn to another widely popular family of generative models, generative adversarial networks.
+  </p>
 
   <p>
     The second approach trains a neural network directly from action space to brush stroke, using an adversarial loss. 
