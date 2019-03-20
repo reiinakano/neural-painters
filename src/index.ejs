@@ -192,19 +192,38 @@
 
   <p>
     The biggest weakness of the VAE neural painter is its "smudging" effect on the brushstrokes.
-    Instead of accurately recreating the dotted texture of the larger brushstrokes, the VAE chooses to smooth them out instead.
-    Depending on the task, this inaccuracy could lead to less than ideal results when we reuse an agent trained with the VAE neural painter on the real painting program.
+    Instead of accurately recreating the dotted texture of the larger brushstrokes, the VAE chooses to smoothen them out instead.
+    Depending on the task, this inaccuracy could lead to less than ideal results when we transfer an agent from a neural painter to the real painting program.
   </p>
 
   <h3>Training a GAN Neural Painter</h3>
 
   <p>
-    To solve this problem, we turn to another widely popular family of generative models, generative adversarial networks.
+    To solve this problem, we turn to another widely popular family of generative models, <b>generative adversarial networks</b>.
+    GANs have been shown to produce sharper images than VAEs, and this property could help us learn more accurate brushstrokes.
   </p>
 
   <p>
-    The second approach trains a neural network directly from action space to brush stroke, using an adversarial loss. 
-    This results in more "realistic" brushstrokes as opposed to the smoothened out VAE brushstrokes.
+    Instead of relying on the reconstruction and KL divergence loss used by VAEs, we use an adversarial loss function to directly learn a mapping from actions to brushstrokes.
+    Unlike a regular GAN, we do not inject noise into the input of the generator.
+    Instead, we feed the generator the input action and have it map directly to a brushstroke.
+    The discriminator is given real and generated action-brushstroke pairs and tries to distinguish whether the pair is valid or not.
+    In this way, it is similar to a conditional GAN.
+    The training process is illustrated in the diagram below.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Static diagram for GAN neural painter architecture.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    The results of training this network is shown below.
+    Although the recreation isn't perfect, we can see that the outputs of the neural painter are "rougher" and more realistic as opposed to the smoothened out VAE brushstrokes.
   </p>
 
   <span id="figure-number-gan-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
@@ -219,6 +238,12 @@
       <%= require("../static/diagrams/general.svg") %>
     </div>
   </figure>
+
+  <p>
+    How well an agent's actions transfer from a neural painter to the real painting program depend directly on how accurate the neural painter's outputs are.
+    In this section we explored only two possible approaches, and there remains a lot of room for improvement in this area. 
+    We have provided accompanying notebooks for training our VAE and GAN neural painters to serve as a good starting point for anyone interested in training their own.
+  </p>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
