@@ -78,8 +78,60 @@
   <h2 id="section-training-painter-networks"><a href="#section-training-painter-networks">Training Painter Networks</a></h2>
 
   <p>
-    This section shows two approaches for training a neural painter based on a real painting program, <a href="http://mypaint.org">MyPaint</a>. 
-    It begins with a description of the action space for a brush stroke: starting point, end point, control point, brush size, pressure, color. 
+    The main role of a neural painter is to serve as a fully differentiable simulation of a particular painting program.
+    In this article, we use an open source painting program called <a href="http://mypaint.org">MyPaint</a>, which was also used by SPIRAL.
+  </p>
+
+  <p>
+    There are two main considerations for training a neural painter, the painting program's <b>action space</b> and the neural painter's <b>architecture</b>.
+  </p>
+
+  <p>
+    The <b>action space</b> defines the set of parameters that are used as control inputs for the painting environment.
+    It serves as the interface that an agent can use to generate a painting.
+  </p>
+
+  <p>
+    For the experiments in this article, we use a slight variation of the action space used by SPIRAL, that maps a single action to a single brushstroke in the MyPaint program.
+    An agent "paints" by successively generating actions and applying full brushstrokes on a canvas.
+    The table below shows the variables that constitute the action space.
+  </p>
+
+  <table>
+    <tr>
+      <th>Action variable</th>
+      <th>Description</th>
+    </tr>
+    <tr>
+      <td>Start and end pressure</td>
+      <td>Two variables that define the pressure applied to the brush at the beginning and end of the stroke.</td> 
+    </tr>
+    <tr>
+      <td>Brush size</td>
+      <td>Determines the radius of the generated brushstroke.</td>
+    </tr>
+    <tr>
+      <td>Color</td>
+      <td>3D integer vector determining the RGB color of the brushstroke.</td>
+    </tr>
+    <tr>
+      <td>Brush coordinates</td>
+      <td>
+        Three Cartesian coordinates on a 2D canvas, defining the brushstroke's shape.
+        The coordinates define a starting point, end point, and an intermediate control point, constituting a quadratic Bezier curve.
+      </td>
+    </tr>
+  </table>
+
+  <p>
+    The main difference of this action space from the one used by SPIRAL is that we avoid the use of discrete variables.
+    Instead of using discrete variables for brush size and stroke pressure, we use continuous variables.
+    We also drop the binary variable that determines whether or not to lift the brush.
+    The reasoning behind this will be explained in more detail in a later section.
+  </p>
+
+  <p>
+    The diagram below lets you explore the effect of each variable in the action space on a brushstroke rendered by MyPaint.
   </p>
 
   <figure class="subgrid">
