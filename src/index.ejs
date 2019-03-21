@@ -121,7 +121,7 @@
       <td>Brush coordinates</td>
       <td>
         Three Cartesian coordinates on a 2D canvas, defining the brushstroke's shape.
-        The coordinates define a starting point, end point, and an intermediate control point, constituting a quadratic Bezier curve.
+        The coordinates define a starting point, end point, and an intermediate control point, constituting a quadratic Bezier curve<d-footnote>explanation</d-footnote>.
       </td>
     </tr>
   </table>
@@ -252,17 +252,44 @@
   <h2 id='section-recreating-spiral'><a href="#section-recreating-spiral">Recreating SPIRAL results</a></h2>
 
   <p>
-    The SPIRAL paper trained an agent to learn to recreate images from a particular domain (MNIST, Omniglot, CelebA) using a constrained action space (the painting program). 
-    As the painting program is non-differentiable, the agent is trained using adversarial reinforcement learning.
+    Ganin, et al. trained a neural agent called SPIRAL to learn to "paint" images by using the constrained action space of a real painting program.
+    In the paper, an agent was trained to paint images from three different datasets: MNIST, Omniglot, and CelebA. 
+    As the painting program is non-differentiable, the agent was trained using adversarial reinforcement learning.
   </p>
 
   <p> 
-    Since a neural painter is fully differentiable, we don't need reinforcement learning, and can just train the agent using regular adversarial methods. 
-    We test the approach's performance on three datasets: MNIST, KMNIST, and CelebA, and show the results.
+    Since a neural painter is fully differentiable, we don't need reinforcement learning techniques to perform the same experiments.
+    We can simply train the agent using regular adversarial methods.
   </p>
 
   <p>
-    We begin with MNIST.
+    A neural agent is designed to take an input target image and output a set of actions.
+    These output actions are connected directly to the neural painter and mapped to brushstrokes on a canvas.
+    The agent's goal is to recreate the input image on the canvas using the constraints that the neural painter imposes.
+    The idea is that the agent's outputs can be transferred directly to the real painting program, despite seeing only the neural painter during training.
+  </p>
+
+  <p>
+    When training this agent, instead of directly optimizing a pixelwise loss like L2 distance, we use an adversarial loss.
+    As discussed in the SPIRAL paper, this leads to better and more well-behaved gradients that the agent can use to learn.
+    The diagram below shows the full training setup for our agent.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Static diagram showing adversarial training setup.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    We test this approach's performance on three datasets: MNIST, KMNIST, and CelebA.
+  </p>
+
+  <p>
+    The results for the agent trained to draw MNIST digits with brushstrokes is shown below:
   </p>
 
   <figure class="subgrid">
@@ -290,7 +317,8 @@
   </figure>
 
   <p>
-    Finally, we do CelebA.
+    Finally, we try the approach on CelebA. 
+    Note the effect that increasing the number of brushstrokes has on the resulting paintings.
   </p>
 
   <figure class="subgrid">
@@ -304,7 +332,20 @@
   </figure>
 
   <p>
-    We end with an interesting interactive diagram.
+    A significant advantage of this approach over SPIRAL is the amount of computing resources needed to achieve these results.
+    Training SPIRAL involves using several multi-CPU/multi-GPU computers over the course of a few days.
+    Our experiments can be reproduced entirely within the single GPU-environment of Google Colaboratory.
+  </p>
+
+  <p>
+    We believe this quick convergence can be partially attributed to the ease of <b>credit assignment</b>.
+    When training our agent, the full gradients from each stroke are available and can be used directly in backpropagation, as opposed to the reinforcement learning paradigm used by SPIRAL, where only the reward at the end of painting is taken into account.
+    This can be observed qualitatively by comparing the strokes produced by these agents on the CelebA dataset.
+    SPIRAL's first few strokes are completely occluded by future strokes, while this does not happen with strokes produced by our agent.
+  </p>
+
+  <p>
+    We have ported some of these agents to TensorFlow.js so you can use your own input and observe the agent "paint" them.
   </p>
 
   <figure class="subgrid">
