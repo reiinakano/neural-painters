@@ -200,7 +200,7 @@
 
   <p>
     To solve this problem, we turn to another widely popular family of generative models, <b>generative adversarial networks</b>.
-    GANs have been shown to produce sharper images than VAEs, and this property could help us learn more accurate brushstrokes.
+    GANs have been shown to produce sharper images than VAEs, and this property could help the neural painter produce accurate brushstrokes.
   </p>
 
   <p>
@@ -365,13 +365,30 @@
   </h3>
 
   <p>
-    This is a short aside on discrete action spaces. 
-    So far, we've constrained the brushstroke action space to continuous variables. 
-    This is in contrast to the original SPIRAL paper, that used 10 discrete levels for representing brush pressure and a binary flag that determines whether the brush is lifted or not.
+    In the previous section on training neural painters, we mentioned how we removed discrete variables from the action space that SPIRAL used.
+    Why? Is it impossible to train a neural painter on a discrete action space?
+    We explore this and train a neural painter with some discrete variables mixed into the action space
+    <d-footnote>
+      Brush size and stroke pressure are discrete variables with 10 levels.
+      An extra binary flag is used to determine whether or not a brush is lifted i.e. a lifted brush produces no stroke.
+    </d-footnote>.
   </p>
+  
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Simple animated GIF or MP4 of a real brushstroke (left) and the neurally generated brushstroke (right) moving through the action space.
+      We can include the moving knobs in the animation like in Figure 2 of DiffParams article.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
 
   <p>
-    In this section, a neural painter trained with discrete actions is explored. 
+    As you can see, our methods for training a neural painter work just as well with this action space.
+    Of course, this diagram misses a very important point: neural networks take continuous inputs.
+    Even if a neural painter perfectly recreates the painting program's outputs within the range of possible actions, its output between two discrete values is completely undefined.
+    The neural painter must bridge this gap, and it is free to do it however it wants.
   </p>
 
   <figure class="subgrid">
@@ -383,6 +400,36 @@
       <%= require("../static/diagrams/general.svg") %>
     </div>
   </figure>
+
+  <p>
+    Observing the output of the neural painter as the lift variable is moved continuously from 0 to 1 shows an interesting effect.
+    As the brush is lifted, the produced stroke seems to "flicker" until eventually disappearing completely.
+    Somehow, the network has decided that these random flickers were the easiest way to represent a lift value between 0 and 1.
+  </p>
+
+  <p>
+    When recreating a painting program's output, this behavior is not a problem.
+    After all, a user can simply constrain the inputs to use only valid values.
+    Unfortunately, this does not hold when we use the gradients from this neural painter to train an agent.
+  </p>
+
+  <p>
+    At best, this behavior makes the agent think it can produce impossible strokes, causing a discrepancy between the outputs of the neural painter and the painting program.
+    This is the case when the agent outputs a stroke thickness between discrete values, which is "rounded off" to the nearest brushstroke size when transferred to the painting program.
+  </p>
+
+  <p>  
+    At worst, it can kill training due to bad gradients.
+    When the lift variable is used, the agent quickly gets into a state where it produces only invisible strokes.
+    At this point, moving the agent's variables slightly in any direction would still produce invisible strokes.
+    Essentially, there is no gradient for the agent to learn anything and training is stuck.
+  </p>
+
+  <p>
+    Figuring out how to handle these discrete actions is an interesting research direction moving forward. 
+    Unfortunately, we cannot always side step this issue as we have done in this case by completely ignoring discrete variables. 
+    Many interesting environments (including the MuJoCo Scenes environment solved by SPIRAL) will have unavoidable discrete actions, and if we want to apply neural painters to those tasks, handling a discrete action space will be necessary.
+  </p>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
