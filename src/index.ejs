@@ -438,8 +438,30 @@
   <h2 id='section-expert-teaching'><a href="#section-expert-teaching">Learning Human Strokes</a></h2>
 
   <p>
-    Previously, the agent can be observed to favor a particular stroke order e.g. top to bottom, left to right for MNIST digits. 
-    This section shows that if the agent is preconditioned on a specific stroke order (requires only one example per class), it learns to apply that stroke order when recreating other examples.
+    In the previous section, you may have observed an interesting thing about the stroke order used by the painting agent.
+    In all cases, a particular agent will use a certain similar stroke order for all target images.
+  </p>
+
+  <p>
+    For example, in the MNIST case, an agent may choose to draw all digits using a bottom-to-top, counter-clockwise approach.
+    The agent does not bother using different strokes for different digits.
+    Notice how 8's are usually treated as 3's with closed loops. 
+  </p>
+  
+  <p>
+    For CelebA, an agent might follow a certain set of "rules" for <i>any</i> image
+    e.g. shade the background, fill in the face shape, add hair, then add a stroke for the eyes.
+  </p>
+
+  <p>
+    In these experiments, the painting agent was trained with only one goal: recreate a given target image using brushstrokes.
+    Since neural networks are "lazy learners" that converge to the nearest local minimum, the agent learns the simplest possible solution: use similar strokes everywhere.
+    There's no reason to favor dissimilar, let alone human, stroke orders, as long as the final painted image looks as much like the target image as possible. 
+  </p>
+
+  <p>
+    Of course, there is value in an agent that tries to draw like a human.
+    An agent that learns to distinguish a 3 from an 8
   </p>
 
   <figure class="subgrid">
