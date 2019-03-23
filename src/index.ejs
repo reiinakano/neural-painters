@@ -439,7 +439,7 @@
 
   <p>
     In the previous section, you may have observed an interesting thing about the stroke order used by the painting agent.
-    In all cases, a particular agent will use a certain similar stroke order for all target images.
+    For any given agent, the stroke order generated for all target images will be similar.
   </p>
 
   <p>
@@ -449,7 +449,7 @@
   </p>
   
   <p>
-    For CelebA, an agent might follow a certain set of "rules" for <i>any</i> image
+    For CelebA, an agent might follow a certain set of "steps" for every target image
     e.g. shade the background, fill in the face shape, add hair, then add a stroke for the eyes.
   </p>
 
@@ -463,11 +463,11 @@
     Of course, there is value in an agent that tries to draw like a human.
     First, we might be able to learn a model that accurately converts pixel character images to stroke vector data.
     Second, it might actually improve the original goal of reconstruction.
-    Since digits in the MNIST dataset were actually drawn using a human order, an agent will likely find it easier to reconstruct some of the finer details of an image if it knows how the digit is usually drawn.
+    Since digits in the MNIST dataset were actually drawn using a human order, an agent will likely find it easier to reconstruct some of the finer details of an image if it understands how a digit is usually drawn.
   </p>
 
   <p>
-    We use a very simple but effective method to bias the agent to learn human strokes: preconditioning.
+    In this section, we try a very simple but effective method to bias the agent to learn human strokes: <b>preconditioning</b>.
   </p>
 
   <figure class="subgrid">
