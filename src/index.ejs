@@ -461,7 +461,13 @@
 
   <p>
     Of course, there is value in an agent that tries to draw like a human.
-    An agent that learns to distinguish a 3 from an 8
+    First, we might be able to learn a model that accurately converts pixel character images to stroke vector data.
+    Second, it might actually improve the original goal of reconstruction.
+    Since digits in the MNIST dataset were actually drawn using a human order, an agent will likely find it easier to reconstruct some of the finer details of an image if it knows how the digit is usually drawn.
+  </p>
+
+  <p>
+    We use a very simple but effective method to bias the agent to learn human strokes: preconditioning.
   </p>
 
   <figure class="subgrid">
