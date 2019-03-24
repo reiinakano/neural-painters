@@ -435,7 +435,7 @@
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
     <a href="#section-expert-teaching" class="section-number">3</a>
   </p>
-  <h2 id='section-expert-teaching'><a href="#section-expert-teaching">Learning Human Strokes</a></h2>
+  <h2 id='section-expert-teaching'><a href="#section-expert-teaching">Towards Learning Human Strokes</a></h2>
 
   <p>
     In the previous section, you may have observed an interesting thing about the stroke order used by the painting agent.
@@ -470,6 +470,36 @@
     In this section, we try a very simple but effective method to bias the agent to learn human strokes: <b>preconditioning</b>.
   </p>
 
+  <p>
+    Instead of starting adversarial training with the agent's variables initialized randomly, we precondition the agent by forcing it to generate a particular set of strokes for each class.
+    Our process is as follows:
+  </p>
+
+  <ol>
+    <li>
+      We begin by manually generating a single example for each class, with strokes we think are representative for the entire class. e.g. We can decide to draw 0's counter-clockwise, 1's top-to-bottom. 
+    </li>
+    <li>
+      Train the agent to reconstruct our manual strokes for each class via mean squared error, disregarding adversarial loss.
+      Of course, we do not train the discriminator at this point.
+    </li>
+    <li>
+      After the agent has started producing our manual strokes for every class, we can consider it preconditioned.
+    </li>
+    <li>
+      Reintroduce adversarial loss. 
+      At this point, we can either completely drop off stroke reconstruction loss, or reduce its effect at a scheduled interval.
+    </li>
+    <li>
+      Train normally.
+    </li>
+  </ol>
+
+  <p>
+    We test our process on MNIST, with the following stroke examples.
+    Notice how the approach requires us to provide only a single human example for each class.
+  </p>
+
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
       This is just an animated GIF of the strokes used to pre-condition the agent. 
@@ -479,6 +509,10 @@
       <%= require("../static/diagrams/general.svg") %>
     </div>
   </figure>
+
+  <p>
+    The results of the trained agent are shown below.
+  </p>
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
@@ -490,6 +524,29 @@
       <%= require("../static/diagrams/general.svg") %>
     </div>
   </figure>
+
+  <p>
+    We can see that the agent has more or less learned to stick with our original stroke order, with slight variations to make sure the target image is reconstructed.
+    All 0's are drawn counter-clockwise, and all 1's are drawn top-to-bottom.
+  </p>
+
+  <p>
+    One way to explain why preconditioning works is that it changes the <b>basins of attraction</b> for the optimization problem.
+    For an untrained, randomly initialized agent, the nearest local minimum for the adversarial loss is likely one that keeps stroke order similar for different characters.
+    However, once it has been preconditioned to produce a certain set of strokes for each class, the closest local minimum becomes one that is as similar as possible to those strokes.
+  </p>
+
+  <p>
+    Preconditioning also has the nice side benefit of faster convergence after preconditioning.
+    After all, if the agent has an idea of the correct stroke order, it'll have a much easier time reconstructing a particular digit.
+    The local minimum associated with the correct stroke order will also be closer to ground truth than what an agent would have found otherwise.
+  </p>
+
+  <p>
+    Of course, there are some limitations to our approach.
+    It relies on us knowing the correct class label for each image. 
+  </p>
+
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
