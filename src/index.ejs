@@ -532,21 +532,35 @@
 
   <p>
     One way to explain why preconditioning works is that it changes the <b>basins of attraction</b> for the optimization problem.
-    For an untrained, randomly initialized agent, the nearest local minimum for the adversarial loss is likely one that keeps stroke order similar for different characters.
+    For an untrained, randomly initialized agent, the nearest local minimum for the adversarial loss is likely one that keeps stroke order similar, regardless of the target character.
     However, once it has been preconditioned to produce a certain set of strokes for each class, the closest local minimum becomes one that is as similar as possible to those strokes.
   </p>
 
   <p>
-    Preconditioning also has the nice side benefit of faster convergence after preconditioning.
+    The approach also has the nice side benefit of faster convergence after preconditioning.
     After all, if the agent has an idea of the correct stroke order, it'll have a much easier time reconstructing a particular digit.
     The local minimum associated with the correct stroke order will also be closer to ground truth than what an agent would have found otherwise.
   </p>
 
   <p>
-    Of course, there are some limitations to our approach.
-    It relies on us knowing the correct class label for each image. 
+    Although the approach is quite effective, it has a lot of room for improvement.
   </p>
 
+  <p>
+    It relies on us knowing the correct class label for each image.
+    Without this information, we won't be able to tell the agent to use a certain stroke order for a particular digit, simply because we don't know what digit it is.
+  </p>
+
+  <p>
+    Another weakness of the approach is its inability to properly handle multimodal classes that can be written in different ways.
+    An example is the MNIST 7. 
+    7's can be drawn either with or without the horizontal bar at the center, which are two different stroke orders.
+    To apply the same technique, we need to condition the agent in a way that it distinguishes different modes of the class, and have it apply the correct stroke order.
+  </p>
+
+  <p>
+    Solving these problems are a good direction for future research.
+  </p>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
