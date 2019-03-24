@@ -569,8 +569,39 @@
   <h2 id='section-diff-image-param'><a href="#section-diff-image-param">As a Differentiable Image Parameterization</a></h2>
 
   <p>
-    Since the neural painter is differentiable, it can be used as a differentiable image parameterization. 
-    The diagrams here will mostly mirror the ones from the Differentiable Image Parameterization article.
+    <b>Differentiable image parameterizations</b> are a technique developed by Mordvintsev, et. al. to generate visualizations and art from pre-trained neural networks.
+    Given a network trained on images (usually deep convolutional networks), we attempt to find a 2D image that maximally activates a particular neuron in the network.
+    Instead of directly optimizing the individual RGB values of each pixel, we try different image generation processes that map some set of parameters to a 2D image.
+    As long as this process is differentiable, we can directly optimize the parameters using backpropagation.
+    Depending on the image generation process, the results can be strikingly different and beautiful.
+    In the article, the authors try various parameterizations such as CPPNs, Fourier transforms, and even 3D to 2D mappings.
+  </p>
+
+  <p>
+    Since neural painters are differentiable mappings from the brushstroke action space to a 2D image, they can be used directly as a differentiable image parameterization.
+  </p>
+
+  <p>
+    In this article, we focus on visualizing the final layer of the pre-trained networks, corresponding to specific ImageNet classes.
+    We also find that a good way to improve the outputs is to optimize more than one pre-trained network at the same time<d-footnote>as done by Tom White in his work on Synthetic Abstractions</d-footnote>.
+    This ensures the outputs generalize better by reducing the effect of each individual network's imperfections.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Static figure of a neural painter as a differentiable image parameterization.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    A fun way to interpret the results of a neural painter used as a differentiable image parameterization is as the answer to the question: 
+  </p>
+
+  <p>
+    <b>If you gave a pre-trained network a brush and asked it to paint a picture of the <i>optimal</i> panda, what would it paint?</b>
   </p>
 
   <figure class="subgrid">
@@ -585,6 +616,15 @@
     </div>
   </figure>
 
+  <p>
+    The results show just how diverse the generated outputs can be for any given class, by simply tweaking the number of strokes, changing the neural painter, or using different pre-trained networks.
+  </p>
+
+  <p>
+    Another interesting way to visualize the technique is by watching an animation of the training process itself.
+    Starting from a random arrangement of brushstrokes, the strokes slowly "bloom" and rearrange themselves into a sample of the class being visualized.
+  </p>
+
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
       We can show some videos of the optimization from a random initialization to end result.
@@ -593,6 +633,10 @@
       <%= require("../static/diagrams/general.svg") %>
     </div>
   </figure>
+
+  <p>
+    You can play around with the technique and create your own visualizations easily using the accompanying notebooks.
+  </p>
   
   <hr/>
 
@@ -601,8 +645,11 @@
   <p>
     Constraints are a key element of creativity. 
     The natural constraints that an artistic medium imposes on the artist give a piece of art a distinct look from others. 
-    An artist attempting to paint a scene using oil paints will get a remarkably distinct result from someone trying to sketch the same scene using a single pencil. 
-    In the same sense, an agent constrained to use brush strokes will find creative ways to achieve its objective (recreate a digit, face, or maximize another neural network's activations). 
+    An artist attempting to paint a scene using oil paints will get a remarkably different result from someone trying to sketch the same scene with a pencil. 
+    In the same sense, an agent constrained to use brush strokes will find creative ways to achieve its objective - whether it is recreating digits, painting faces, or maximizing a pretrained network's activations.
+  </p>
+
+  <p>
     This article explored the power of neural painters as a differentiable constraint learned from a real painting simulator, but the techniques and ideas introduced can be applied to other mediums, perhaps 3D renderers or animations.
   </p>
 
