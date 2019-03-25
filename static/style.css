@@ -39,3 +39,26 @@ d-figure > figure {
   top: 26px;
   left: -48px;
 }
+
+a.section-number::before {
+  content: "Section ";
+}
+
+a.figure-number::before {
+  content: "Figure ";
+}
+
+a.figure-number,
+a.section-number {
+  border-bottom-color: hsla(206, 90%, 20%, 0.3);
+  text-transform: uppercase;
+  font-size: .85em;
+  color: hsla(206, 90%, 20%, 0.7);
+}
+
+a.figure-number:hover,
+a.section-number:hover {
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: hsla(206, 90%, 20%, 0.7);
+}
