@@ -48,28 +48,29 @@
 <d-article>
 
   <p>
-    This post explores neural painters' strengths and weaknesses, training methods, and some interesting things that can be achieved with them.
+    There has been a lot of work on using neural networks to generate painting-like images, some of the most notable being style transfer<d-cite key="gatys2015"></d-cite> and GANs, and all their many variations.
+    Most of these techniques generate images by having a network directly calculate the RGB value of each pixel.
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      <!-- <span class="figure-number">Figure 1:</span> -->
-      <span style="hyphens: manual;">As long as an </span>
-      <span style="background-color: #FFF1E7; padding-left: 2px; padding-right: 2px;">image para&shy;meter&shy;ization</span>
-      <span>is differ&shy;entiable, we can back&shy;propagate</span>
-      <span style="white-space: nowrap;">( <img src="diagrams/backprop-arrow.svg" style="width: unset;"/> )</span>
-      <span>through it.</span>
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
+  <p>
+    Recently, there has been work on getting neural networks to generate paintings in a way much closer to how a human actually would - by generating brushstrokes instead of pixels.
+    An example is the work done by Ganin et. al., on SPIRAL, a reinforcement learning agent trained adversarially to learn how to use a real painting program to generate images.
+    A neural agent called SPIRAL learns to reconstruct images from CelebA by defining brushstrokes on a canvas.
+  </p>
 
   <p>
-    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    <d-footnote>Test! Let's cite<d-cite key="gatys2015"></d-cite> someone!</d-footnote>
-    More text!
-  </p> 
+    Though impressive, the reinforcement adversarial learning framework used by SPIRAL is complex and requires significant computational resources.
+    Recent work by Ha, et. al. and Hafner, et. al. have shown that building a differentiable world model of an environment can drastically reduce computational requirements for reinforcement learning algorithms.
+  </p>
+
+  <p>
+    In this article, we explore the concept of <b>neural painters</b>, which are differentiable simulations of a non-differentiable painting program.
+    Similar work has been done by Zheng, et. al. on StrokeNet, although this work was developed independently.
+  </p>
+
+  <p>
+    This post explores neural painters' strengths and weaknesses, training methods, and some of the more interesting things that can be achieved with them.
+  </p>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
@@ -646,7 +647,7 @@
     Constraints are a key element of creativity. 
     The natural constraints that an artistic medium imposes on the artist give a piece of art a distinct look from others. 
     An artist attempting to paint a scene using oil paints will get a remarkably different result from someone trying to sketch the same scene with a pencil. 
-    In the same sense, an agent constrained to use brush strokes will find creative ways to achieve its objective - whether it is recreating digits, painting faces, or maximizing a pretrained network's activations.
+    In the same sense, a neural agent constrained to use brush strokes will find creative ways to achieve its objective - whether it be recreating digits, painting faces, or maximizing a pretrained network's activations.
   </p>
 
   <p>
