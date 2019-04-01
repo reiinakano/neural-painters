@@ -17,7 +17,7 @@ const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
 // }
 
 {
-  const figure = document.getElementById("CPPN-Examples");
+  const figure = document.getElementById("DIP-Examples");
   figure.addEventListener("ready", function() {
     const cppnAnimations = new DIPExamples({target: figure});
   });
