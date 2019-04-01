@@ -1,13 +1,28 @@
+
+<div class="controls">
+  <span>The optimal&nbsp;</span>
+  <select bind:value="category">
+    <option value="pandas">panda</option>
+    <option value="random">random</option>
+  </select>
+</div>
 <div class="sprites grid">
   {#each range(24) as x}
   <div class="sprite-container">
-    <Sprite url="images/dip-examples/pandas.jpg" width=224 columns=8 index={x}/>
+    <Sprite url={sprite_url} width=224 columns=8 index={x}/>
   </div>
   {/each}
 </div>
 
 
 <style>
+.controls {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 /* Layout */
 .sprites {
   margin: 0 16px 16px 16px;
@@ -56,6 +71,11 @@
 import { Sprite } from "lucid-components";
 import { range } from "../util.js";
 export default {
+  data() {
+    return {
+      category: "pandas",
+    }
+  },
   // data() {
   //   return {
   //     sprite_url_index: 0,
@@ -71,6 +91,7 @@ export default {
   //   this.set({sprite_url_index: mq.matches ? 1 : 0});
   // },
   computed: {
+    sprite_url: ({category}) => "images/dip-examples/" + category + ".jpg",
     // sprite_url: ({sprite_urls, sprite_url_index}) => sprite_urls[sprite_url_index],
     // sprite_width: ({sprite_url_index}) => sprite_url_index == 0 ? 100 : 300,
   },
