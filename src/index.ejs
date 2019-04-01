@@ -605,16 +605,12 @@
     <b>If you gave a pre-trained network a brush and asked it to paint a picture of the <i>optimal</i> panda, what would it paint?</b>
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      This is a zoomable collection of pictures, similar to the CPPN example results in Figure 7 of the DiffParams article. 
-      One interesting addition could be a dropdown of categories. 
-      Upon selection of a category, all images change to an optimized "painting" of that category.
-      Zooming into one of the images could also show how it was generated e.g. number of strokes, VAE/GAN painter.
+  <figure id="figure-dip-examples" class="base-grid">
+    <d-figure style="grid-column: screen;" id="DIP-Examples"></d-figure>
+    <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--dip-examples" style="grid-column: text;">
+      <a href="#figure-dip-examples" class="figure-number">7</a>:
+      A <d-cite key="stanley2007cppn">Compositional Pattern Producing Network (CPPN)</d-cite> is used as differentiable parameterization for visualizing features at different layers<d-cite key="olah2017feature"></d-cite>.
     </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
   </figure>
 
   <p>
