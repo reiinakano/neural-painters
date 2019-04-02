@@ -1,28 +1,24 @@
-<label>
-  <span>
-    Starting pressure
-    <span class="value">{startPressure}</span>
-  </span>
-</label>
-<div style="width: 100px;">
-  <d-slider 
-    type="range" min=0 max=2 step=1 ticks value=0
-    on:input="updateStartPressure(this.value)">
-  </d-slider>
-</div>
-<label>
-    <span>
-      End pressure
-      <span class="value">{endPressure}</span>
-    </span>
-  </label>
-  <div style="width: 100px;">
-    <d-slider 
-      type="range" min=0 max=2 step=1 ticks value=0
-      on:input="updateEndPressure(this.value)">
-    </d-slider>
-  </div>
 <div class="canvas-container grid">
+  <div>
+    <label>
+      <span>
+        Starting pressure
+        <span class="value">{startPressure}</span>
+      </span>
+    </label>
+    <div style="width: 100px;">
+      <input bind:value="startPressure" type="range" min=0 max=2>
+    </div>
+    <label>
+      <span>
+        End pressure
+        <span class="value">{endPressure}</span>
+      </span>
+    </label>
+    <div style="width: 100px;">
+      <input bind:value="endPressure" type="range" min=0 max=2>
+    </div>
+  </div>
   <img ref:image hidden src={img_src} alt="">
   <canvas on:click="handleClick(event)" class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
 </div>
@@ -153,20 +149,6 @@
 
       clearCanvas() {
         this.ctx.clearRect(0, 0, 256, 256); // clear canvas
-      },
-
-      updateStartPressure(val) {
-        console.log("starting pressure", val);
-        if (this.ctx !== undefined) {  // What the fuck? Make sure oncreate is called before doing any set() calls.
-          this.set({startPressure: val});
-        };
-      },
-
-      updateEndPressure(val) {
-        console.log("end pressure", val);
-        if (this.ctx !== undefined) {  // What the fuck? Make sure oncreate is called before doing any set() calls.
-          this.set({endPressure: val});
-        };
       }
     },
     
