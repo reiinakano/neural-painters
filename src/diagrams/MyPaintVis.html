@@ -1,5 +1,5 @@
 <div class="canvas-container grid">
-  <canvas class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
+  <canvas on:click="handleClick(event)" class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
 </div>
   
   
@@ -35,7 +35,21 @@
     [32, 56]
   ]
 
+  function check_distance_within_limit(pointA, pointB, limit) {
+    return limit > Math.sqrt((pointA[0]-pointB[0])**2 + (pointA[1]-pointB[1])**2);
+  }
+
   export default {
+		onstate({ changed, current, previous }) {
+			// this fires before oncreate, and on every state change.
+      // the first time it runs, `previous` is undefined
+      console.log('called onstate', current, previous);
+      if (previous !== undefined) {
+        this.clearCanvas();
+        this.drawCanvas();
+      }
+		},
+
     oncreate() {
 			const canvas = this.refs.canvas;
       this.ctx = canvas.getContext('2d');
@@ -44,6 +58,23 @@
     },
     
     methods: {
+      handleClick(evt) {
+        const rect = this.refs.canvas.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / SCALE;
+        const y = (event.clientY - rect.top) / SCALE;
+        console.log("x: " + x + " y: " + y);
+        for (let i = 0; i < 3; i++) {
+          if (check_distance_within_limit([x, y], END_LIST[i], SELECT_RADIUS)) {
+            this.set({endPoint: END_LIST[i]});
+            return;
+          }
+          if (check_distance_within_limit([x, y], CONTROL_LIST[i], SELECT_RADIUS)) {
+            this.set({controlPoint: CONTROL_LIST[i]});
+            return;
+          }
+        }
+      },
+
       drawSelectors() {
         const ctx = this.ctx;
 
@@ -92,6 +123,10 @@
         this.drawSelectors();
         this.drawShadedSelectors();
       },
+
+      clearCanvas() {
+        this.ctx.clearRect(0, 0, 256, 256); // clear canvas
+      }
     },
     
     data() {
