@@ -21,6 +21,19 @@
   const SELECT_RADIUS = 5;
   const START_X = 8;
   const START_Y = 8;
+  const START_COLOR = 'orange';
+  const END_COLOR = 'red';
+  const CONTROL_COLOR = 'green';
+  const END_LIST = [
+    [56, 56],
+    [56, 8],
+    [8, 56]
+  ]
+  const CONTROL_LIST = [
+    [32, 8],
+    [56, 32],
+    [32, 56]
+  ]
 
   export default {
     oncreate() {
@@ -37,49 +50,54 @@
         ctx.lineWidth = 2;
         ctx.setLineDash([4, 2]);
 
-        ctx.strokeStyle = 'orange';
+        ctx.fillStyle = START_COLOR;
         ctx.beginPath();
-        ctx.arc(SCALE*startX, SCALE*startY, SELECT_RADIUS, 0, Math.PI * 2, true);
-        ctx.stroke();
-
-        ctx.strokeStyle = 'red';
-        ctx.beginPath();
-        ctx.arc(SCALE*endX, SCALE*endY, SELECT_RADIUS, 0, Math.PI * 2, true);
-        ctx.stroke();
-
-        ctx.strokeStyle = 'green';
-        ctx.beginPath();
-        ctx.arc(SCALE*controlX, SCALE*controlY, SELECT_RADIUS, 0, Math.PI * 2, true);
-        ctx.stroke();
-      },
-
-      drawCanvas() {
-        const { startX, startY } = this.get();
-        const { endX, endY } = this.get();
-        const { controlX, controlY } = this.get();
-        const ctx = this.ctx;
+        ctx.arc(SCALE*START_X, SCALE*START_Y, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.fill();
 
         ctx.lineWidth = 2;
         ctx.setLineDash([4, 2]);
 
-        ctx.fillStyle = 'red';
+        ctx.strokeStyle = CONTROL_COLOR;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.arc(SCALE*CONTROL_LIST[i][0], SCALE*CONTROL_LIST[i][1], SELECT_RADIUS, 0, Math.PI * 2, true);
+          ctx.stroke();
+        }
+
+        ctx.strokeStyle = END_COLOR;
+        for (let i = 0; i < 3; i++) {
+          ctx.beginPath();
+          ctx.arc(SCALE*END_LIST[i][0], SCALE*END_LIST[i][1], SELECT_RADIUS, 0, Math.PI * 2, true);
+          ctx.stroke();
+        }
+      },
+
+      drawShadedSelectors() {
+        const { endPoint, controlPoint } = this.get();
+        const ctx = this.ctx;
+
+        ctx.fillStyle = CONTROL_COLOR;
         ctx.beginPath();
-        ctx.arc(SCALE*endX, SCALE*endY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.arc(SCALE*controlPoint[0], SCALE*controlPoint[1], SELECT_RADIUS, 0, Math.PI * 2, true);
         ctx.fill();
 
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = END_COLOR;
         ctx.beginPath();
-        ctx.arc(SCALE*controlX, SCALE*controlY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.arc(SCALE*endPoint[0], SCALE*endPoint[1], SELECT_RADIUS, 0, Math.PI * 2, true);
         ctx.fill();
+      },
+
+      drawCanvas() {
+        this.drawSelectors();
+        this.drawShadedSelectors();
       },
     },
     
     data() {
       return {
-        endX: 42,
-        endY: 42,
-        controlX: 32,
-        controlY: 32,
+        endPoint: END_LIST[0],
+        controlPoint: CONTROL_LIST[0],
       }
     },
   }
