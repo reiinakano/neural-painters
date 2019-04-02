@@ -1,7 +1,7 @@
 <div class="canvas-container ">
   <div class="controls-container">
     <div>
-      <div> Starting pressure ({startPressure/2.})</div>
+      <div> Start pressure ({startPressure/2.})</div>
       <div><input bind:value="startPressure" type="range" min=0 max=2></div>
     </div>
     <div>
@@ -96,7 +96,7 @@
 		},
     
     methods: {
-      handleClick(evt) {
+      handleClick(event) {
         const rect = this.refs.canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) / SCALE;
         const y = (event.clientY - rect.top) / SCALE;
