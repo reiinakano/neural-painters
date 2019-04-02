@@ -62,6 +62,21 @@
     return limit > Math.sqrt((pointA[0]-pointB[0])**2 + (pointA[1]-pointB[1])**2);
   }
 
+  function hexToRgb(hex) {
+    // Expand shorthand form (e.g. "03F") to full form (e.g. "0033FF")
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+  }
+
   export default {
 
     oncreate() {
@@ -142,9 +157,46 @@
         ctx.fill();
       },
 
+      convertAndDrawImage() {
+        const { color } = this.get();
+
+        this.ctx.drawImage(this.refs.image, 0, 0);
+        const imgdata = this.ctx.getImageData(0, 0, 256, 256);
+        const rgba = imgdata.data;
+        
+        let darkestGray = 255;
+        const arraylength = 256 * 256 * 4;
+        //Common formula for converting to grayscale.
+        //gray = 0.3*R + 0.59*G + 0.11*B
+        for (let i=arraylength-1; i>0;i-=4) {
+          //R= i-3, G = i-2 and B = i-1
+          //Get our gray shade using the formula
+          const gray = 0.3 * rgba[i-3] + 0.59 * rgba[i-2] + 0.11 * rgba[i-1];
+          //Set our 3 RGB channels to the computed gray.
+          rgba[i-3] = gray;
+          rgba[i-2] = gray;
+          rgba[i-1] = gray;
+
+          if (gray < darkestGray) {
+            darkestGray = gray;
+          }
+        }
+        
+        const c = hexToRgb(color);
+        for (let i=arraylength-1; i>0;i-=4) {
+          const scale = (255.-rgba[i-3]) / (255.-darkestGray);
+
+          rgba[i-3] = 255-(scale * (255-c.r));
+          rgba[i-2] = 255-(scale * (255-c.g));
+          rgba[i-1] = 255-(scale * (255-c.b));
+        }
+        
+        this.ctx.putImageData(imgdata, 0, 0);
+      },
+
       drawCanvas() {
         this.clearCanvas();
-        this.ctx.drawImage(this.refs.image, 0, 0);
+        this.convertAndDrawImage();
         this.drawSelectors();
         this.drawShadedSelectors();
       },
