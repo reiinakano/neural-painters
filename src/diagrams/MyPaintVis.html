@@ -1,3 +1,27 @@
+<label>
+  <span>
+    Starting pressure
+    <span class="value">{startPressure}</span>
+  </span>
+</label>
+<div style="width: 100px;">
+  <d-slider 
+    type="range" min=0 max=2 step=1 ticks value=0
+    on:input="updateStartPressure(this.value)">
+  </d-slider>
+</div>
+<label>
+    <span>
+      End pressure
+      <span class="value">{endPressure}</span>
+    </span>
+  </label>
+  <div style="width: 100px;">
+    <d-slider 
+      type="range" min=0 max=2 step=1 ticks value=0
+      on:input="updateEndPressure(this.value)">
+    </d-slider>
+  </div>
 <div class="canvas-container grid">
   <img ref:image hidden src={img_src} alt="">
   <canvas on:click="handleClick(event)" class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
@@ -41,24 +65,22 @@
   }
 
   export default {
-		onstate({ changed, current, previous }) {
-			// this fires before oncreate, and on every state change.
-      // the first time it runs, `previous` is undefined
-      console.log('called onstate', current, previous);
-      if (previous !== undefined) {
-        this.clearCanvas();
-        this.drawCanvas();
-      }
-		},
 
     oncreate() {
-			const canvas = this.refs.canvas;
+      const canvas = this.refs.canvas;
       this.ctx = canvas.getContext('2d');
 
       this.refs.image.onload = () => {
         this.drawCanvas();
       }
     },
+
+    onupdate({ changed, current, previous }) {
+			// this fires after oncreate, and after every state change
+			// once the DOM is synchronised with the data
+      console.log(`The DOM has been updated`, changed, current, previous);
+      this.drawCanvas();
+		},
     
     methods: {
       handleClick(evt) {
@@ -123,6 +145,7 @@
       },
 
       drawCanvas() {
+        this.clearCanvas();
         this.ctx.drawImage(this.refs.image, 0, 0);
         this.drawSelectors();
         this.drawShadedSelectors();
@@ -130,6 +153,20 @@
 
       clearCanvas() {
         this.ctx.clearRect(0, 0, 256, 256); // clear canvas
+      },
+
+      updateStartPressure(val) {
+        console.log("starting pressure", val);
+        if (this.ctx !== undefined) {  // What the fuck? Make sure oncreate is called before doing any set() calls.
+          this.set({startPressure: val});
+        };
+      },
+
+      updateEndPressure(val) {
+        console.log("end pressure", val);
+        if (this.ctx !== undefined) {  // What the fuck? Make sure oncreate is called before doing any set() calls.
+          this.set({endPressure: val});
+        };
       }
     },
     
@@ -137,6 +174,8 @@
       return {
         endPoint: END_LIST[0],
         controlPoint: CONTROL_LIST[0],
+        startPressure: 0,
+        endPressure: 0,
       }
     },
 
