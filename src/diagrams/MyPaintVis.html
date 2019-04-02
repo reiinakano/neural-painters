@@ -1,4 +1,5 @@
 <div class="canvas-container grid">
+  <img ref:image hidden src={img_src} alt="">
   <canvas on:click="handleClick(event)" class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
 </div>
   
@@ -21,9 +22,9 @@
   const SELECT_RADIUS = 5;
   const START_X = 8;
   const START_Y = 8;
-  const START_COLOR = 'orange';
-  const END_COLOR = 'red';
-  const CONTROL_COLOR = 'green';
+  const START_COLOR = 'black';
+  const END_COLOR = 'green';
+  const CONTROL_COLOR = 'orange';
   const END_LIST = [
     [56, 56],
     [56, 8],
@@ -53,8 +54,10 @@
     oncreate() {
 			const canvas = this.refs.canvas;
       this.ctx = canvas.getContext('2d');
-      
-      this.drawCanvas();
+
+      this.refs.image.onload = () => {
+        this.drawCanvas();
+      }
     },
     
     methods: {
@@ -120,6 +123,7 @@
       },
 
       drawCanvas() {
+        this.ctx.drawImage(this.refs.image, 0, 0);
         this.drawSelectors();
         this.drawShadedSelectors();
       },
@@ -134,6 +138,18 @@
         endPoint: END_LIST[0],
         controlPoint: CONTROL_LIST[0],
       }
+    },
+
+    computed: {
+      img_src: ({endPoint}) => {
+        if (endPoint === END_LIST[0]) {
+          return "images/mypaint-vis/a.png";
+        } else {
+          return "images/mypaint-vis/download.png";
+        }
+      },
+      // sprite_url: ({sprite_urls, sprite_url_index}) => sprite_urls[sprite_url_index],
+      // sprite_width: ({sprite_url_index}) => sprite_url_index == 0 ? 100 : 300,
     },
   }
   </script>
