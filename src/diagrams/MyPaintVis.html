@@ -1,0 +1,87 @@
+<div class="canvas-container grid">
+  <canvas class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
+</div>
+  
+  
+  <style>
+.canvas-container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.stroke-canvas {
+  border: 1px solid black;
+}
+  </style>
+  
+  
+  <script>
+  const SCALE = 4;
+  const SELECT_RADIUS = 5;
+  const START_X = 8;
+  const START_Y = 8;
+
+  export default {
+    oncreate() {
+			const canvas = this.refs.canvas;
+      this.ctx = canvas.getContext('2d');
+      
+      this.drawCanvas();
+    },
+    
+    methods: {
+      drawSelectors() {
+        const ctx = this.ctx;
+
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 2]);
+
+        ctx.strokeStyle = 'orange';
+        ctx.beginPath();
+        ctx.arc(SCALE*startX, SCALE*startY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(SCALE*endX, SCALE*endY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.stroke();
+
+        ctx.strokeStyle = 'green';
+        ctx.beginPath();
+        ctx.arc(SCALE*controlX, SCALE*controlY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.stroke();
+      },
+
+      drawCanvas() {
+        const { startX, startY } = this.get();
+        const { endX, endY } = this.get();
+        const { controlX, controlY } = this.get();
+        const ctx = this.ctx;
+
+        ctx.lineWidth = 2;
+        ctx.setLineDash([4, 2]);
+
+        ctx.fillStyle = 'red';
+        ctx.beginPath();
+        ctx.arc(SCALE*endX, SCALE*endY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.fill();
+
+        ctx.fillStyle = 'green';
+        ctx.beginPath();
+        ctx.arc(SCALE*controlX, SCALE*controlY, SELECT_RADIUS, 0, Math.PI * 2, true);
+        ctx.fill();
+      },
+    },
+    
+    data() {
+      return {
+        endX: 42,
+        endY: 42,
+        controlX: 32,
+        controlY: 32,
+      }
+    },
+  }
+  </script>
+  

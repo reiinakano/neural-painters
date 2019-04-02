@@ -1,5 +1,6 @@
 import VisualTOC                      from './diagrams/VisualTOC.html';
-import DIPExamples                   from "./diagrams/DIPExamples.html";
+import MyPaintVis                     from './diagrams/MyPaintVis.html';
+import DIPExamples                    from "./diagrams/DIPExamples.html";
 
 import ColabLink                      from './components/ColabLink.html';
 
@@ -15,6 +16,13 @@ const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
 //     const styleTransferExamples = new StyleTransferExamples({target: figure});
 //   });
 // }
+
+{
+  const figure = document.getElementById("MyPaint-Vis");
+  figure.addEventListener("ready", function() {
+    const myPaintVis = new MyPaintVis({target: figure});
+  });
+}
 
 {
   const figure = document.getElementById("DIP-Examples");
