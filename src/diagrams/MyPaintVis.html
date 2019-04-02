@@ -1,22 +1,19 @@
-<div class="canvas-container grid">
-  <div>
-    <label>
-      <span>
-        Starting pressure
-        <span class="value">{startPressure}</span>
-      </span>
-    </label>
-    <div style="width: 100px;">
-      <input bind:value="startPressure" type="range" min=0 max=2>
+<div class="canvas-container ">
+  <div class="controls-container">
+    <div>
+      <div> Starting pressure ({startPressure/2.})</div>
+      <div><input bind:value="startPressure" type="range" min=0 max=2></div>
     </div>
-    <label>
-      <span>
-        End pressure
-        <span class="value">{endPressure}</span>
-      </span>
-    </label>
-    <div style="width: 100px;">
-      <input bind:value="endPressure" type="range" min=0 max=2>
+    <div>
+      <div> End pressure ({endPressure/2.})</div>
+      <div><input bind:value="endPressure" type="range" min=0 max=2></div>
+    </div>
+    <div>
+      <div> Brush size ({brushSize/2.})</div>
+      <div><input bind:value="brushSize" type="range" min=0 max=2></div>
+    </div>
+    <div>
+      <input bind:value="color" type="color" id="head" name="head" value="#e66465">
     </div>
   </div>
   <img ref:image hidden src={img_src} alt="">
@@ -25,6 +22,11 @@
   
   
   <style>
+.controls-container {
+  padding-right: 30px;
+  font-size: 0.8em;
+}
+
 .canvas-container {
   height: 100%;
   display: flex;
@@ -158,6 +160,8 @@
         controlPoint: CONTROL_LIST[0],
         startPressure: 0,
         endPressure: 0,
+        brushSize: 0,
+        color: "#e66465",
       }
     },
 
