@@ -15,6 +15,9 @@
     <div>
       <input bind:value="color" type="color" id="head" name="head" value="#e66465">
     </div>
+    <div>
+        <button on:click="set({randIdx: (randIdx+1)%3})">Randomize</button>
+    </div>
   </div>
   <img ref:image hidden src={img_src} alt="">
   <canvas on:click="handleClick(event)" class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
@@ -79,6 +82,14 @@
 
   export default {
 
+    onstate({ changed, current, previous }) {
+			// this fires before oncreate, and on every state change.
+			// the first time it runs, `previous` is undefined
+      if (previous !== undefined) {
+        this.drawCanvas();
+      }
+		},
+
     oncreate() {
       const canvas = this.refs.canvas;
       this.ctx = canvas.getContext('2d');
@@ -88,12 +99,12 @@
       }
     },
 
-    onupdate({ changed, current, previous }) {
+    //onupdate({ changed, current, previous }) {
 			// this fires after oncreate, and after every state change
 			// once the DOM is synchronised with the data
-      console.log(`The DOM has been updated`, changed, current, previous);
-      this.drawCanvas();
-		},
+    //  console.log(`The DOM has been updated`, changed, current, previous);
+    //  this.drawCanvas();
+		//},
     
     methods: {
       handleClick(event) {
@@ -160,7 +171,7 @@
       convertAndDrawImage() {
         const { color } = this.get();
 
-        this.ctx.drawImage(this.refs.image, 0, 0);
+        this.ctx.drawImage(this.refs.image, 0, 0, 256, 256);
         const imgdata = this.ctx.getImageData(0, 0, 256, 256);
         const rgba = imgdata.data;
         
@@ -210,20 +221,17 @@
       return {
         endPoint: END_LIST[0],
         controlPoint: CONTROL_LIST[0],
-        startPressure: 0,
-        endPressure: 0,
+        startPressure: 1,
+        endPressure: 1,
         brushSize: 0,
+        randIdx: 0,
         color: "#e66465",
       }
     },
 
     computed: {
-      img_src: ({endPoint}) => {
-        if (endPoint === END_LIST[0]) {
-          return "images/mypaint-vis/a.png";
-        } else {
-          return "images/mypaint-vis/download.png";
-        }
+      img_src: ({endPoint, controlPoint, brushSize, startPressure, endPressure, randIdx}) => {
+        return "images/mypaint-vis/strokes/8_8_"+endPoint[0]+"_"+endPoint[1]+"_"+controlPoint[0]+"_"+controlPoint[1]+"_"+brushSize+"_"+startPressure+"_"+endPressure+"_"+randIdx+".jpg";
       },
       // sprite_url: ({sprite_urls, sprite_url_index}) => sprite_urls[sprite_url_index],
       // sprite_width: ({sprite_url_index}) => sprite_url_index == 0 ? 100 : 300,
