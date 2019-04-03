@@ -1,16 +1,16 @@
 <div class="canvas-container ">
   <div class="controls-container">
     <div>
-      <div> Start pressure ({startPressure/2.})</div>
-      <div><input bind:value="startPressure" type="range" min=0 max=2></div>
+      <div> Start pressure ({(startPressure/3.).toFixed(2)})</div>
+      <div><input bind:value="startPressure" type="range" min=0 max=3></div>
     </div>
     <div>
-      <div> End pressure ({endPressure/2.})</div>
-      <div><input bind:value="endPressure" type="range" min=0 max=2></div>
+      <div> End pressure ({(endPressure/3.).toFixed(2)})</div>
+      <div><input bind:value="endPressure" type="range" min=0 max=3></div>
     </div>
     <div>
-      <div> Brush size ({brushSize/2.})</div>
-      <div><input bind:value="brushSize" type="range" min=0 max=2></div>
+      <div> Brush size ({(brushSize/3.).toFixed(2)})</div>
+      <div><input bind:value="brushSize" type="range" min=0 max=3></div>
     </div>
     <div>
       <input bind:value="color" type="color" id="head" name="head" value="#e66465">
