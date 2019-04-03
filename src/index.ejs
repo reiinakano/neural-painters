@@ -142,18 +142,10 @@
     <d-figure style="grid-column: screen;" id="MyPaint-Vis"></d-figure>
     <figcaption id="figcaption--mypaint-vis" style="grid-column: text;">
       <a href="#figure-my-paint-vis" class="figure-number">1</a>:
-      A <d-cite key="stanley2007cppn">Compositional Pattern Producing Network (CPPN)</d-cite> is used as differentiable parameterization for visualizing features at different layers<d-cite key="olah2017feature"></d-cite>.
+      Explore the action space of a brush stroke by interacting with this diagram.
+      Try recalculating the brushstroke for an action.
+      Notice how the output for a particular action is non-deterministic, despite the curve of the brushstroke being determined mathematically.
     </figcaption>
-  </figure>
-
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      The user is allowed to move the various knobs and see how the action space defines a full brushstroke. 
-      Unless there's a good way to run a C++ library on the browser (MyPaint), then the images will presumably be fetched from somewhere as the knobs move.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
   </figure>
 
   <p>
