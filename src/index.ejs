@@ -179,15 +179,17 @@
     </div>
   </figure>
 
-  <p>The diagram below compares the results of a trained VAE neural painter with the real output of MyPaint.</p>
+  <p>The video below compares the results of a trained VAE neural painter with the real output of MyPaint.</p>
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
-      Simple animated GIF or MP4 of a real brushstroke (left) and the neurally generated brushstroke (right) moving through the action space.
-      We can include the moving knobs in the animation like in Figure 2 of DiffParams article.
+      A real brushstroke (left) and the neurally generated brushstroke (right) moving through the action space.
     </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+    <div class="l-body" style="height: 100%; display: flex; justify-content: center;">
+      <video loop autoplay playsinline muted
+        <source src="images/vae-painter/stroke.mp4" type="video/mp4" style="border: 1px solid #000; height: 100%; width: 100%;"/>
+        Your browser does not support the video tag.
+      </video>
     </div>
   </figure>
 
