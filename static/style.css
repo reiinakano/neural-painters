@@ -25,6 +25,10 @@ d-figure > figure {
   margin-bottom: 0;
 }
 
+d-slider {
+  width: 100%;
+}
+
 .shaded-figure {
   background-color: hsl(0, 0%, 97%);
   border-top: 1px solid hsla(0, 0%, 0%, 0.1);

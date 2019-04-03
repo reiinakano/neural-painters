@@ -138,14 +138,14 @@
     The diagram below lets you explore the effect of each variable in the action space on a brushstroke rendered by MyPaint.
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      The user is allowed to move the various knobs and see how the action space defines a full brushstroke. 
-      Unless there's a good way to run a C++ library on the browser (MyPaint), then the images will presumably be fetched from somewhere as the knobs move.
+  <figure id="figure-mypaint-vis" class="base-grid">
+    <d-figure style="grid-column: screen;" id="MyPaint-Vis"></d-figure>
+    <figcaption id="figcaption--mypaint-vis" style="grid-column: text;">
+      <a href="#figure-my-paint-vis" class="figure-number">1</a>:
+      Explore the action space of a brush stroke by interacting with this diagram.
+      Try recalculating the brushstroke for an action.
+      Notice how the output for a particular action is non-deterministic, despite the curve of the brushstroke being determined mathematically.
     </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
   </figure>
 
   <p>
@@ -605,16 +605,12 @@
     <b>If you gave a pre-trained network a brush and asked it to paint a picture of the <i>optimal</i> panda, what would it paint?</b>
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      This is a zoomable collection of pictures, similar to the CPPN example results in Figure 7 of the DiffParams article. 
-      One interesting addition could be a dropdown of categories. 
-      Upon selection of a category, all images change to an optimized "painting" of that category.
-      Zooming into one of the images could also show how it was generated e.g. number of strokes, VAE/GAN painter.
+  <figure id="figure-dip-examples" class="base-grid">
+    <d-figure style="grid-column: screen;" id="DIP-Examples"></d-figure>
+    <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--dip-examples" style="grid-column: text;">
+      <a href="#figure-dip-examples" class="figure-number">7</a>:
+      A <d-cite key="stanley2007cppn">Compositional Pattern Producing Network (CPPN)</d-cite> is used as differentiable parameterization for visualizing features at different layers<d-cite key="olah2017feature"></d-cite>.
     </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
   </figure>
 
   <p>

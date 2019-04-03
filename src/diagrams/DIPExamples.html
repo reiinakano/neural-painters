@@ -1,0 +1,101 @@
+
+<div class="controls">
+  <span>The optimal&nbsp;</span>
+  <select bind:value="category">
+    <option value="pandas">pandas</option>
+    <option value="bees">bees</option>
+    <option value="random">mix</option>
+  </select>
+</div>
+<div class="sprites grid">
+  {#each range(24) as x}
+  <div class="sprite-container">
+    <Sprite url={sprite_url} width=224 columns=4 index={x}/>
+  </div>
+  {/each}
+</div>
+
+
+<style>
+.controls {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Layout */
+.sprites {
+  margin: 0 16px 16px 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  
+}
+@media (min-width: 512px) {
+  .sprites {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+@media (min-width: 640px) {
+  .sprites {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+@media (min-width: 896px) {
+  .sprites {
+    grid-template-columns: repeat(8, 1fr);
+  }
+}
+/* Appearance and Hover */
+.sprite-container {
+  display: block;
+}
+.sprite-container > :global(canvas) {
+  display: block;
+  pointer-events: none;
+  background-color: white;
+  width: 100%;
+  border-radius: 4px;
+  transition: transform 0.1s ease-out, box-shadow 0.1s ease-out;
+}
+.sprite-container:hover > :global(canvas) {
+  border: 2px solid white;
+  margin: -2px;
+  transform: scale(1.6);
+  box-shadow: 0px 0px 8px rgba(0,0,0,0.3);
+}
+</style>
+
+
+<script>
+import { Sprite } from "lucid-components";
+import { range } from "../util.js";
+export default {
+  data() {
+    return {
+      category: "pandas",
+    }
+  },
+  // data() {
+  //   return {
+  //     sprite_url_index: 0,
+  //     sprite_urls: [
+  //       'images/cppn-examples-smaller.jpg',
+  //       'images/cppn-examples.jpg',
+  //     ]
+  //   }
+  // },
+  // oncreate: function() {
+  //   const mq = matchMedia("(min-width: 896px)");
+  //   mq.onchange = (event) => this.set({sprite_url_index: mq.matches ? 1 : 0});
+  //   this.set({sprite_url_index: mq.matches ? 1 : 0});
+  // },
+  computed: {
+    sprite_url: ({category}) => "images/dip-examples/" + category + ".jpg",
+    // sprite_url: ({sprite_urls, sprite_url_index}) => sprite_urls[sprite_url_index],
+    // sprite_width: ({sprite_url_index}) => sprite_url_index == 0 ? 100 : 300,
+  },
+  components: { Sprite },
+  helpers: { range },
+}
+</script>
