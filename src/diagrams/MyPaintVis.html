@@ -107,6 +107,22 @@
 		//},
     
     methods: {
+      buttonWasPressed() {
+        const { timer, buttonState } = this.get();
+        const newButtonState = (buttonState+1) % 2;
+        clearInterval(timer);
+        if (newButtonState === 0) {
+          const newTimer = setInterval(() => this.tick(), 100);
+          this.set({timer: newTimer});
+        }
+        this.set({buttonState: newButtonState});
+      },
+
+      tick() {
+        const {randIdx} = this.get();
+        this.set({randIdx: (randIdx + 1)%3});
+      },
+
       handleClick(event) {
         const rect = this.refs.canvas.getBoundingClientRect();
         const x = (event.clientX - rect.left) / SCALE;
@@ -226,6 +242,8 @@
         brushSize: 0,
         randIdx: 0,
         color: "#e66465",
+
+        buttonState: 1,
       }
     },
 
