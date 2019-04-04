@@ -294,56 +294,15 @@
 
   <p>
     We test this approach's performance on three datasets: MNIST, KMNIST, and CelebA.
-  </p>
-
-  <p>
-    The results for the agent trained to draw MNIST digits with brushstrokes is shown below:
+    You can explore the results for our agent in the diagram below:
   </p>
 
   <d-figure class="base-grid" id='SPIRAL-Examples' style="padding: 0; border: none;"></d-figure>
   <p class="l-body figcaption">
     <a href="#figure-spiral-examples" class="figure-number">4</a>:
-    Examples of the optimization of semi transparent images for different layers and units.
+    The animation shows three images: the target image (left), the neural painter output (center), and the generated brushstrokes transferred back to MyPaint (right).
+    Note the effect of the neural painter type and the number of strokes in the CelebA reconstructions.
   </p>
-
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      The diagram shows three images side by side: one of the target image, one of the neural painter output produced by the agent, and finally, the same actions executed on the real painting program. 
-      The latter two images will be animated, showing the stroke order used to recreate the target image. 
-      There is a button that can be clicked to fetch a new set of images.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
-
-  <p>
-    Then KMNIST.
-  </p>
-
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      Same as MNIST diagram.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
-
-  <p>
-    Finally, we try the approach on CelebA. 
-    Note the effect that increasing the number of brushstrokes has on the resulting paintings.
-  </p>
-
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      The diagram for CelebA should be almost the same as the diagrams for the previous two datasets. 
-      In addition to the button for fetching a new set of images, we add a button for toggling the output produced by the VAE vs GAN neural painter, and a slider for selecting the number of strokes.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
 
   <p>
     A significant advantage of this approach over SPIRAL is the amount of computing resources needed to achieve these results.
