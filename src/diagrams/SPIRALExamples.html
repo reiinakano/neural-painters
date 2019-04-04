@@ -9,7 +9,7 @@
           <option value="celeba">CelebA</option>
         </select>
         <div class="separator"></div>
-        <select>
+        <select bind:value="painter">
           <option value="vae">VAE</option>
           <option value="gan">GAN</option>
         </select>
@@ -17,8 +17,8 @@
       </div>
       <div class="blending-controls">
         <span class="figcaption">No. of strokes</span>
-        <div class="slider-wrapper"><Slider bind:value="backgroundOpacity" type="range" min="0" max="2" step="1" ticks=true/></div>
-        <span class="figcaption">8</span>
+        <div class:hide="dataset !== 'celeba'" class="slider-wrapper"><Slider bind:value="strokes" type="range" min="0" max="2" step="1" ticks=true/></div>
+        <span class="figcaption">{strokesDisplay}</span>
       </div>
       <ColabLink :url/>
     </div>
@@ -117,6 +117,10 @@
     flex-basis: auto;
     flex-grow: 1;
   }
+
+  .hide {
+    display: none;
+  }
   
   .blending-controls > span {
     padding-left: 8px;
@@ -161,13 +165,28 @@ export default {
       backgroundMode: 'light',
       backgroundOpacity: 0.5,
       url: sections[1].colab_url,
-      dataset: 'celeba'
+      dataset: 'celeba',
+      painter: 'gan',
+      strokes: 1
     }
   },
   computed: {
-    video_src: ({dataset}) => {
-      console.log(dataset);
-      return "images/spiral-examples/" + dataset + ".mp4"
+    video_src: ({dataset, painter, strokesDisplay}) => {
+      console.log(dataset, painter, strokesDisplay);
+      if (dataset === 'celeba') {
+        return "images/spiral-examples/" + dataset + "_" + painter + "_" + strokesDisplay + ".mp4"
+      } else {
+        return "images/spiral-examples/" + dataset + "_" + painter + ".mp4"
+      }
+    },
+    strokesDisplay: ({dataset, strokes}) => {
+      if (dataset === 'celeba') {
+        return [15, 30, 50][strokes];
+      } else if (dataset === 'kmnist') {
+        return 20;
+      } else {
+        return 8;
+      }
     }
   },
   methods: {
