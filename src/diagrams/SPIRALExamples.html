@@ -3,7 +3,7 @@
   <div id='container'>
     <div class="controls">
       <div class="background-controls">
-        <select>
+        <select bind:value="dataset">
           <option value="mnist">MNIST</option>
           <option value="kmnist">KMNIST</option>
           <option value="celeba">CelebA</option>
@@ -24,8 +24,8 @@
     </div>
 
     <div class="video-container">
-      <video class="video" loop autoplay playsinline muted>
-        <source src="images/spiral-examples/celeba.mp4" type="video/mp4"/>
+      <video ref:video class="video" loop autoplay playsinline muted>
+        <source ref:source src="{video_src}" type="video/mp4"/>
         Your browser does not support the video tag.
       </video>
     </div>
@@ -148,12 +148,26 @@ import Slider from '../components/Slider';
 import ColabLink from '../components/ColabLink.html';
 import { sections } from '../sections.json';
 export default {
+  onupdate({ previous }) {
+    console.log('onupdate');
+    if (this.refs.video !== undefined) {
+      this.refs.video.load();  // Is this valid?
+    }
+  },
+
   data() {
     return {
       mode: 'normal',
       backgroundMode: 'light',
       backgroundOpacity: 0.5,
-      url: sections[1].colab_url
+      url: sections[1].colab_url,
+      dataset: 'celeba'
+    }
+  },
+  computed: {
+    video_src: ({dataset}) => {
+      console.log(dataset);
+      return "images/spiral-examples/" + dataset + ".mp4"
     }
   },
   methods: {
