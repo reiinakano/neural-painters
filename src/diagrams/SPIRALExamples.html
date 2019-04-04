@@ -1,0 +1,164 @@
+<figure id="figure-spiral-examples" class="base-grid">
+  
+  <div id='container'>
+    <div class="controls">
+      <div class="background-controls">
+        <select>
+          <option value="mnist">MNIST</option>
+          <option value="kmnist">KMNIST</option>
+          <option value="celeba">CelebA</option>
+        </select>
+        <div class="separator"></div>
+        <select>
+          <option value="vae">VAE</option>
+          <option value="gan">GAN</option>
+        </select>
+        <div class="separator"></div>
+      </div>
+      <div class="blending-controls">
+        <span class="figcaption">No. of strokes</span>
+        <div class="slider-wrapper"><Slider bind:value="backgroundOpacity" type="range" min="0" max="2" step="1" ticks=true/></div>
+        <span class="figcaption">8</span>
+      </div>
+      <ColabLink :url/>
+    </div>
+
+    <div class="video-container">
+      <video class="video" loop autoplay playsinline muted>
+        <source src="images/spiral-examples/celeba.mp4" type="video/mp4"/>
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  
+  </div>
+  
+</figure>
+
+
+<style>
+  figure {
+    padding: 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    
+    transition: background 0.35s;
+    
+    grid-row-gap: 10px;
+  }
+
+  .video-container {
+    grid-column: 1 / -1;
+
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .video {
+    border: 1px solid #000; 
+    height: 100%; 
+    width: 100%;
+  }
+
+  #container {
+    display: grid;
+    position: relative;
+    z-index: 1;
+    grid-gap: 8px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column: text-start / text-end;
+  }
+  
+  @media (min-width: 768px) {
+    #container {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  
+  @media (min-width: 1180px) {
+    #container {
+      grid-template-columns: repeat(4, 168px);
+    }
+  }
+  
+  figure {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  
+  .controls {
+    grid-column: 1 / -1;
+    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    
+    background-color: hsl(0, 0%, 97%);
+    background-color: hsla(0, 0%, 97%, 0.85);
+    padding: 8px;
+    
+    transition: opacity 0.35s, background-color 0.35s;
+  }
+  
+  .controls > :global(.colab-root) {
+    margin-top: 3px;
+    margin-bottom: 3px;
+  }
+  
+  .blending-controls {
+    display: flex;
+    flex-flow: row;
+    align-content: stretch;
+    min-width: 150px;
+    max-width: 250px;
+    flex-basis: auto;
+    flex-grow: 1;
+  }
+  
+  .blending-controls > span {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  
+  .separator {
+    display: inline-block;
+    content: '';
+    width: 5px;
+    height: 100%;
+    background-color: red;
+  }
+  
+  .slider-wrapper {
+    width: 100%;
+    /* min-width: 100px;
+    max-width: 200px; */
+    /* flex-basis: auto; */
+    /* flex-grow: 1; */
+  }
+  
+
+</style>
+
+
+<script>
+import Slider from '../components/Slider';
+import ColabLink from '../components/ColabLink.html';
+import { sections } from '../sections.json';
+export default {
+  data() {
+    return {
+      mode: 'normal',
+      backgroundMode: 'light',
+      backgroundOpacity: 0.5,
+      url: sections[1].colab_url
+    }
+  },
+  methods: {
+    
+  },
+  components: { Slider, ColabLink }
+}
+</script>
