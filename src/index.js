@@ -1,6 +1,7 @@
 import VisualTOC                      from './diagrams/VisualTOC.html';
 import MyPaintVis                     from './diagrams/MyPaintVis.html';
 import DIPExamples                    from "./diagrams/DIPExamples.html";
+import SPIRALExamples                 from "./diagrams/SPIRALExamples.html";
 
 import ColabLink                      from './components/ColabLink.html';
 
@@ -29,6 +30,13 @@ const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
   figure.addEventListener("ready", function() {
     const cppnAnimations = new DIPExamples({target: figure});
   });
+}
+
+{
+  const figure = document.getElementById("SPIRAL-Examples");
+  figure.addEventListener("ready", function() {
+    const spiralExamples = new SPIRALExamples({target: figure});
+  })
 }
 
 function addColabLinks(sections) {

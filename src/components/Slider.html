@@ -1,0 +1,57 @@
+<style>
+    .root {
+      display: flex!important;
+    }
+    /* label {
+      color: rgba(0, 0, 0, 0.5);
+      font-size: 13px;
+      line-height: 13px;
+      margin: 0;
+      padding: 0;
+      margin-left: 10px;
+      width: 50px;
+      display: block;
+    } */
+    d-slider {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+    }
+  </style>
+  
+  
+  <div class="root">
+    <d-slider
+      ref:slider
+      ticks="{ticks}"
+      type="range"
+      min="{min}"
+      max="{max}"
+      origin="0"
+      on:input="input(event)"
+      step="{step}"
+      value="{value}"
+    ></d-slider>
+    <!-- <label>{{value.toFixed(2)}}</label> -->
+  </div>
+  
+  
+  <script>
+  export default {
+    data: function() {
+      return {
+        value: 0,
+        min: 0,
+        max: 1,
+        ticks: true
+      }
+    },
+    methods: {
+      input: function(event) {
+        const value = +event.target.value
+        this.set({value});
+        this.fire("input", value);
+      }
+    }
+  }
+  </script>
