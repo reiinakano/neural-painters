@@ -9,15 +9,16 @@
           <option value="celeba">CelebA</option>
         </select>
         <div class="separator"></div>
-        <select bind:value="painter">
+        <select class:hide="dataset !== 'celeba'" bind:value="painter">
           <option value="vae">VAE</option>
           <option value="gan">GAN</option>
         </select>
+        <span class:hide="dataset === 'celeba'" class="figcaption">{painterDisplay}</span>
         <div class="separator"></div>
       </div>
       <div class="blending-controls">
         <span class="figcaption">No. of strokes</span>
-        <div class:hide="dataset !== 'celeba'" class="slider-wrapper"><Slider bind:value="strokes" type="range" min="0" max="2" step="1" ticks=true/></div>
+        <div class:hide="true" class="slider-wrapper"><Slider bind:value="strokes" type="range" min="0" max="2" step="1" ticks=true/></div>
         <span class="figcaption">{strokesDisplay}</span>
       </div>
       <ColabLink :url/>
@@ -176,17 +177,21 @@ export default {
       if (dataset === 'celeba') {
         return "images/spiral-examples/" + dataset + "_" + painter + "_" + strokesDisplay + ".mp4"
       } else {
-        return "images/spiral-examples/" + dataset + "_" + painter + ".mp4"
+        return "images/spiral-examples/" + dataset + "_" + "vae" + ".mp4"
       }
     },
     strokesDisplay: ({dataset, strokes}) => {
       if (dataset === 'celeba') {
-        return [15, 30, 50][strokes];
+        //return [15, 30, 50][strokes];
+        return 30
       } else if (dataset === 'kmnist') {
         return 20;
       } else {
         return 8;
       }
+    },
+    painterDisplay: ({painter, dataset}) => {
+      return 'VAE';
     }
   },
   methods: {
