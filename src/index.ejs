@@ -551,9 +551,11 @@
     Since neural painters are differentiable mappings from the brushstroke action space to a 2D image, they can be used directly as a differentiable image parameterization.
   </p>
 
+  <h3>Visualizing ImageNet classes</h3>
+
   <p>
-    In this article, we focus on visualizing the final layer of the pre-trained networks, corresponding to specific ImageNet classes.
-    We also find that a good way to improve the outputs is to optimize more than one pre-trained network at the same time<d-footnote>as done by Tom White in his work on Synthetic Abstractions</d-footnote>.
+    We focus on visualizing the final layer of the pre-trained networks, corresponding to specific ImageNet classes.
+    We find that a good way to improve the outputs is to optimize more than one pre-trained network at the same time<d-footnote>as done by Tom White in his work on Synthetic Abstractions</d-footnote>.
     This ensures the outputs generalize better by reducing the effect of each individual network's imperfections.
   </p>
 
@@ -594,6 +596,47 @@
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
       We can show some videos of the optimization from a random initialization to end result.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <h3>Style transfer without a style image</h3>
+
+  <p>
+    As a differentiable image parameterization, neural painters aren't limited to visualizing layers of a pre-trained neural network.
+    We can produce various interesting effects depending on the loss we are optimizing for.
+  </p>
+
+  <p>
+    One such effect is style transfer without a specific style image.
+    With this method, we optimize brushstrokes to minimize <b>only</b> the content loss
+    <d-footnote>
+      To calculate the content loss between a content image and an output image, we take the mean squared error of their respective activations for a particular layer in a pre-trained neural network.
+    </d-footnote>
+    in neural style transfer.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Static diagram.
+    </figcaption>
+    <div class="l-body">
+      <%= require("../static/diagrams/general.svg") %>
+    </div>
+  </figure>
+
+  <p>
+    Intuitively, this technique lets us find brushstrokes that preserve only the higher-level content in the target image.
+    The effect is that of painting only the meaningful parts of a target image, without caring about pixel-level reconstruction.
+    The "style" is dictated purely by the artistic medium, in this case, brushstrokes.
+  </p>
+
+  <figure class="subgrid">
+    <figcaption style="grid-column: kicker">
+      Note how the strokes appear to be generated on multiple grids.
+      Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
     </figcaption>
     <div class="l-body">
       <%= require("../static/diagrams/general.svg") %>
