@@ -340,7 +340,7 @@
   <p>
     In the previous section on training neural painters, we mentioned how we removed discrete variables from the action space that SPIRAL used.
     Why? It is not impossible to train a neural painter on a discrete action space.
-    Our methods for training a neural painter work just as well for an action space with discrete variables
+    Our methods for training a neural painter work just as well for a continuous action space as it does with an action space with discrete variables
     <d-footnote>
       Brush size and stroke pressure are discrete variables with 10 levels.
       An extra binary flag is used to determine whether or not a brush is lifted i.e. a lifted brush produces no stroke.
@@ -348,8 +348,8 @@
   </p>
   
   <p>
-    However, there is one very important point: neural networks take continuous inputs.
-    Even if a neural painter perfectly recreates the painting program's outputs within the range of possible actions, its output between two discrete values is completely undefined.
+    However, there is one very important distinction: neural networks take continuous inputs.
+    Even if a neural painter perfectly recreates the painting program's outputs when given a valid discrete action, its output between two discrete values is completely undefined.
     The neural painter must bridge this gap, and it is free to do it however it wants.
   </p>
 
@@ -372,12 +372,12 @@
   <p>
     When the goal is to simply recreate a painting program's output, this behavior is not a problem.
     After all, a user can simply constrain the inputs to use only valid values.
-    Unfortunately, this does not hold when we use the gradients from this neural painter to train an agent.
+    Unfortunately, this matters very much when we try to use the gradients from this neural painter to train an agent.
   </p>
 
   <p>
     At best, this behavior makes the agent think it can produce impossible strokes, causing a discrepancy between the outputs of the neural painter and the painting program.
-    This is the case when the agent outputs a stroke thickness between discrete values, which is "rounded off" to the nearest brushstroke size when transferred to the painting program.
+    One specific example is when the neural painter interpolates a stroke thickness between discrete values, which is "rounded off" to the nearest brushstroke size when transferred to the painting program.
   </p>
 
   <figure class="subgrid">
@@ -473,11 +473,14 @@
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
-      This is just an animated GIF of the strokes used to pre-condition the agent. 
-      Notice there is only one sample per class.
+      This is an animation of the human-generated strokes used to pre-condition the agent. 
+      Notice how we only provide a single example per class.
     </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+    <div class="l-body" style="height: 100%; display: flex; justify-content: center;">
+      <video loop autoplay playsinline muted
+        <source src="images/vae-painter/stroke.mp4" type="video/mp4" style="border: 1px solid #000; height: 100%; width: 100%;"/>
+        Your browser does not support the video tag.
+      </video>
     </div>
   </figure>
 
@@ -485,16 +488,12 @@
     The results of the trained agent are shown below.
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      This diagram is similar to the previous diagrams on recreating SPIRAL experiments. 
-      In addition to the "Load New Image" button, the user can select a conditional category used as input to the agent. 
-      This will affect the path the agent takes when attempting to recreate the digit.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
+  <d-figure class="base-grid" id='Biased-Stroke-Examples' style="padding: 0; border: none;"></d-figure>
+  <p class="l-body figcaption">
+    <a href="#figure-biased-stroke-examples" class="figure-number">5</a>:
+    The animation shows three images: the target image (left), the neural painter output (center), and the generated brushstrokes transferred back to MyPaint (right).
+    Note how the strokes now follow the general order of our human-generated samples.
+  </p>
 
   <p>
     We can see that the agent has more or less learned to stick with our original stroke order, with slight variations to make sure the target image is reconstructed.
