@@ -1,5 +1,5 @@
 <figure id="figure-style-transfer-examples">
-  <ExampleSelector {spriteUrl} bind:index spriteWidth={128} spriteColumns={8} spriteNumItems={8}></ExampleSelector>
+  <ExampleSelector {spriteUrl} bind:index spriteWidth={204} spriteColumns={3} spriteNumItems={5}></ExampleSelector>
 
   <div class="video-container">
     <video ref:video class="video" loop autoplay playsinline muted>
@@ -62,9 +62,21 @@ const samples = [
     text: "the Golden Gate Bridge"
   },
   {
-    name: "something else",
-    text: "something else"
-  }
+    name: "flamingo",
+    text: "a flamingo"
+  },
+  {
+    name: "big_ben",
+    text: "Big Ben"
+  },
+  {
+    name: "stata",
+    text: "the Stata Center"
+  },
+  {
+    name: "eiffel",
+    text: "the Eiffel Tower"
+  },
 ];
 
 export default {
@@ -74,7 +86,7 @@ export default {
   },
   data() {
     return {
-      spriteUrl: "images/dip-examples/bees.jpg",
+      spriteUrl: "images/style-transfer-examples/sprites.png",
       index: 0,
     }
   },
