@@ -1,0 +1,47 @@
+<div class='grid'>
+  {#each patterns as pattern}
+    <video loop
+        poster="images/dip-animations/anim_{pattern}.png" 
+        on:mouseover='this.setAttribute("controls", true)'
+        on:touchstart='this.setAttribute("controls", true)'
+        on:mouseout='this.removeAttribute("controls")'>
+      <source src="images/dip-animations/anim_{pattern}.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+  {/each}
+</div>
+
+
+<style>
+  .grid {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  @media (min-width: 512px) {
+    .grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  
+  video {
+    width: 100%;
+    max-width: 224px;
+    border-radius: 4px;
+  }
+</style>
+
+
+<script>
+export default {
+  data() {
+    return {
+      patterns: [
+        'panda',
+        'bee',
+      ],
+    }
+  },
+}
+</script>

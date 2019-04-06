@@ -3,6 +3,7 @@ import MyPaintVis                     from './diagrams/MyPaintVis.html';
 import DIPExamples                    from "./diagrams/DIPExamples.html";
 import SPIRALExamples                 from "./diagrams/SPIRALExamples.html";
 import BiasedStrokeExamples           from "./diagrams/BiasedStrokeExamples.html";
+import DIPAnimations                  from "./diagrams/DIPAnimations.html";
 
 import ColabLink                      from './components/ColabLink.html';
 
@@ -44,6 +45,13 @@ const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
   const figure = document.getElementById("Biased-Stroke-Examples");
   figure.addEventListener("ready", function() {
     const biasedStrokeExamples = new BiasedStrokeExamples({target: figure});
+  })
+}
+
+{
+  const figure =  document.getElementById("DIPAnimations");
+  figure.addEventListener("ready", function() {
+    const dipAnimations = new DIPAnimations({target: figure});
   })
 }
 
