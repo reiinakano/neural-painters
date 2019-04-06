@@ -1,0 +1,100 @@
+<figure id="figure-style-transfer-examples">
+  <ExampleSelector {spriteUrl} bind:index spriteWidth={204} spriteColumns={3} spriteNumItems={5}></ExampleSelector>
+
+  <div class="video-container">
+    <video ref:video class="video" loop autoplay playsinline muted>
+      <source ref:source src="{video_src}" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+</figure>
+
+<span class="figcaption l-body">
+  Painting {text}
+</span>
+
+<style>
+  figure {
+    grid-column: screen;
+    padding: 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    
+    transition: background 0.35s;
+    
+    grid-row-gap: 10px;
+  }
+
+  .video-container {
+    grid-column: 1 / -1;
+
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .video {
+    height: 100%; 
+    width: 100%;
+  }
+  
+  figure {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .figcaption {
+    margin-top: 10px;
+  }
+</style>
+
+
+<script>
+import ExampleSelector from '../components/ExampleSelector';
+import { sections } from '../sections.json';
+
+const samples = [
+  {
+    name: "golden_gate",
+    text: "the Golden Gate Bridge"
+  },
+  {
+    name: "flamingo",
+    text: "a flamingo"
+  },
+  {
+    name: "big_ben",
+    text: "Big Ben"
+  },
+  {
+    name: "stata",
+    text: "the Stata Center"
+  },
+  {
+    name: "eiffel",
+    text: "the Eiffel Tower"
+  },
+];
+
+export default {
+  components: { ExampleSelector },
+  onupdate() {
+    this.refs.video.load();
+  },
+  data() {
+    return {
+      spriteUrl: "images/style-transfer-examples/sprites.png",
+      index: 0,
+    }
+  },
+  computed: {
+    video_src: ({ index }) => "images/style-transfer-examples/" + samples[index].name + ".mp4",
+    text: ({ index }) => samples[index].text,
+  },
+  methods: {
+  },
+}
+</script>

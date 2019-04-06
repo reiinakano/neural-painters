@@ -37,11 +37,23 @@ d-slider {
 }
 
 .pointer {
-  position: absolute;
-  width: 26px;
-  height: 26px;
-  top: 26px;
-  left: -48px;
+  grid-column: kicker;
+  justify-self: start;
+  /* margin-bottom: 1em; */
+}
+
+.kicker-text-align {
+  text-align: left;
+}
+
+@media (min-width: 1000px) {
+  .pointer {
+    justify-self: end;
+  }
+  
+  .kicker-text-align {
+    /* text-align: right; */
+  }
 }
 
 a.section-number::before {

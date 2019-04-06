@@ -580,7 +580,7 @@
     <d-figure style="grid-column: screen;" id="DIP-Examples"></d-figure>
     <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--dip-examples" style="grid-column: text;">
       <a href="#figure-dip-examples" class="figure-number">7</a>:
-      A <d-cite key="stanley2007cppn">Compositional Pattern Producing Network (CPPN)</d-cite> is used as differentiable parameterization for visualizing features at different layers<d-cite key="olah2017feature"></d-cite>.
+      A neural painter is used as differentiable parameterization for visualizing ImageNet classes.
     </figcaption>
   </figure>
 
@@ -593,14 +593,14 @@
     Starting from a random arrangement of brushstrokes, the strokes slowly "bloom" and rearrange themselves into a sample of the class being visualized.
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      We can show some videos of the optimization from a random initialization to end result.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
+  <span id="figure-dip-training" class="figcaption kicker-text-align add-colab-link--section-diff-image-param" style="grid-column: kicker;">
+    <p>
+      <img class="pointer" src="images/pointer.svg"><br/>
+      <a href="#figure-dip-training" class="figure-number">8</a>:
+      <span>Visualizing ImageNet classes. <em>Control each video by hovering, or tapping it if you are on a mobile device.</em></span>
+    </p>
+  </span>
+  <d-figure id='DIPAnimations'></d-figure>
 
   <h3>Style transfer without a style image</h3>
 
@@ -633,14 +633,13 @@
     The "style" is dictated purely by the artistic medium, in this case, brushstrokes.
   </p>
 
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      Note how the strokes appear to be generated on multiple grids.
-      Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
+  <figure id="figure-style-transfer-examples">
+  <d-figure id='Style-Transfer-Examples' style="padding: 0; border: none;"></d-figure>
+  <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--style-transfer-examples" style="grid-column: text;">
+    <a href="#figure-style-transfer-examples" class="figure-number">9</a>:
+    Note how the strokes appear to be generated on multiple grids.
+    Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
+  </figcaption>
   </figure>
 
   <p>

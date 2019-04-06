@@ -1,0 +1,93 @@
+<div class="icons" style="--thumbnail-size: {thumbnail_size}px;">
+  {#if spriteUrl}
+    {#each range(spriteNumItems) as i}
+      <div class="icon {(index == i)? 'selected' : ''}" on:click='set({index: i})'>
+        <Sprite url={spriteUrl} width={spriteWidth} columns={spriteColumns} index={i+spriteIndexOffset}></Sprite>
+      </div>
+    {/each}
+  {:elseif items}
+    {#each items as item, i}
+      <div class="icon {(index == i)? 'selected' : ''}" on:click='set({index: i})'>
+        <div style="background-image: url({imageUrlAccessor(item)})" class="{item.rotated? 'rotated' : ''}"></div>
+      </div>
+    {/each}
+  {:else}
+    <span>No content set for ExampleSelector, needs either items or sprite!</span>
+  {/if}
+  
+</div>
+
+
+<style>
+.icons {
+  /* grid-column: min-content;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: calc(49px * 6); */
+  display: grid;
+  /* grid-auto-flow: row; */
+  grid-gap: 5px;
+  grid-template-columns: repeat(auto-fill, var(--thumbnail-size));
+}
+.icons .icon {
+  cursor: pointer;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #dddddd;
+  filter: grayscale();
+}
+.icons .icon.selected {
+  padding-bottom: 3px;
+  border-bottom: 3px solid #ff6600;
+  filter: none;
+}
+.icon div,
+.icon :global(canvas) {
+  display: block;
+  opacity: 0.5;
+  image-rendering: auto;
+  width: var(--thumbnail-size);
+  height: var(--thumbnail-size);
+  background-size: cover;
+  background-position: center;
+}
+.icon.selected div,
+.icon.selected :global(canvas) {
+  opacity: 1;
+}
+.icon :global(canvas) {
+  width: 100%;
+}
+</style>
+
+
+<script>
+import { Sprite } from 'lucid-components';
+import { range } from '../util';
+export default {
+  components: { Sprite },
+  data() {
+    return {
+      items: [],
+      spriteUrl: null,
+      thumbnail_size: 44,
+      image_accessor: 'src',
+      spriteIndexOffset: 0
+    }
+  },
+  computed: {
+    imageUrlAccessor: ({ image_accessor }) => {
+      if (image_accessor !== null) {
+        return (item) => item[image_accessor];
+      } else {
+        return (item) => item;
+      }
+      
+    }
+  },
+  helpers: {
+    range
+  }
+}
+</script>
