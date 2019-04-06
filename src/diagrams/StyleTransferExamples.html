@@ -1,0 +1,68 @@
+<figure id="figure-style-transfer-examples">
+  <ExampleSelector {spriteUrl} bind:index spriteWidth={128} spriteColumns={8} spriteNumItems={8}></ExampleSelector>
+
+  <div class="video-container">
+    <video ref:video class="video" loop autoplay playsinline muted>
+      <source ref:source src="{video_src}" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+</figure>
+
+<style>
+ figure {
+    grid-column: screen;
+    padding: 16px 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    
+    transition: background 0.35s;
+    
+    grid-row-gap: 10px;
+  }
+
+  .video-container {
+    grid-column: 1 / -1;
+
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .video {
+    height: 100%; 
+    width: 100%;
+  }
+  
+  figure {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+</style>
+
+
+<script>
+import ExampleSelector from '../components/ExampleSelector';
+import { sections } from '../sections.json';
+
+export default {
+  components: { ExampleSelector },
+  oncreate() {
+  },
+  data() {
+    return {
+      url: sections[1].colab_url,
+      video_src: "images/style-transfer-examples/golden_gate.mp4",
+      spriteUrl: "images/dip-examples/bees.jpg",
+      index: 0,
+    }
+  },
+  computed: {
+  },
+  methods: {
+  },
+}
+</script>
