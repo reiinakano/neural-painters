@@ -10,8 +10,12 @@
 
 </figure>
 
+<span class="figcaption l-body">
+  Painting {text}
+</span>
+
 <style>
- figure {
+  figure {
     grid-column: screen;
     padding: 16px 0;
     border-top: 1px solid rgba(0, 0, 0, 0.1);
@@ -41,6 +45,10 @@
     margin-top: 0;
     margin-bottom: 0;
   }
+
+  .figcaption {
+    margin-top: 10px;
+  }
 </style>
 
 
@@ -48,19 +56,31 @@
 import ExampleSelector from '../components/ExampleSelector';
 import { sections } from '../sections.json';
 
+const samples = [
+  {
+    name: "golden_gate",
+    text: "the Golden Gate Bridge"
+  },
+  {
+    name: "something else",
+    text: "something else"
+  }
+];
+
 export default {
   components: { ExampleSelector },
-  oncreate() {
+  onupdate() {
+    this.refs.video.load();
   },
   data() {
     return {
-      url: sections[1].colab_url,
-      video_src: "images/style-transfer-examples/golden_gate.mp4",
       spriteUrl: "images/dip-examples/bees.jpg",
       index: 0,
     }
   },
   computed: {
+    video_src: ({ index }) => "images/style-transfer-examples/" + samples[index].name + ".mp4",
+    text: ({ index }) => samples[index].text,
   },
   methods: {
   },
