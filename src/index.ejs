@@ -170,9 +170,10 @@
 
   <p>The diagram for the training process is shown below.</p>
 
-  <figure class="subgrid">
+  <figure id="figure-vae-neural-painter" class="subgrid">
     <figcaption style="grid-column: kicker">
-      VAE neural painter architecture.
+      <p><a href="#figure-vae-neural-painter" class="figure-number">2</a></p>
+      <p>VAE neural painter training</p>
     </figcaption>
     <div class="l-body">
       <%= require("../static/diagrams/vae-neural-painter.svg") %>
@@ -182,7 +183,7 @@
   <p>The video below compares the results of a trained VAE neural painter with the real output of MyPaint.</p>
 
   <span id="figure-number-vae-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
-    <p><a href="#figure-vae-painter-exploration" class="figure-number">2</a></p>
+    <p><a href="#figure-vae-painter-exploration" class="figure-number">3</a></p>
   </span>
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
@@ -218,8 +219,9 @@
     The training process is illustrated in the diagram below.
   </p>
 
-  <figure class="subgrid">
+  <figure id="gan-neural-painter" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-gan-neural-painter" class="figure-number">4</a></p>
       GAN neural painter architecture.
     </figcaption>
     <div class="l-body">
@@ -233,7 +235,7 @@
   </p>
 
   <span id="figure-number-gan-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
-    <p><a href="#figure-gan-painter-exploration" class="figure-number">3</a></p>
+    <p><a href="#figure-gan-painter-exploration" class="figure-number">5</a></p>
   </span>
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
@@ -283,8 +285,9 @@
     The diagram below shows the full training setup for our agent.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-agent-adversarial" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-agent-adversarial" class="figure-number">6</a></p>
       Adversarial training of agent for reconstruction.
     </figcaption>
     <div class="l-body">
@@ -299,7 +302,7 @@
 
   <d-figure class="base-grid" id='SPIRAL-Examples' style="padding: 0; border: none;"></d-figure>
   <p class="l-body figcaption">
-    <a href="#figure-spiral-examples" class="figure-number">4</a>:
+    <a href="#figure-spiral-examples" class="figure-number">7</a>:
     The animation shows three images: the target image (left), the neural painter output (center), and the generated brushstrokes transferred back to MyPaint (right).
     Note the effect of the neural painter type and the number of strokes in the CelebA reconstructions.
   </p>
@@ -337,8 +340,9 @@
     The neural painter must bridge this gap, and it is free to do it however it wants.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-partial-lift" class="subgrid">
     <figcaption style="grid-column: kicker">
+        <p><a href="#figure-partial-lift" class="figure-number">8</a></p>
         This animation shows the effect of lifting the brush "partially" (value between 0 and 1).
         Values between 0 and 1 are undefined and do not exist in the real environment, however, a neural painter must still "dream" up an output.
     </figcaption>
@@ -364,8 +368,9 @@
     One specific example is when the neural painter interpolates a stroke thickness between discrete values, which is "rounded off" to the nearest brushstroke size when transferred to the painting program.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-imperfect-mnist" class="subgrid">
     <figcaption style="grid-column: kicker">
+        <p><a href="#figure-imperfect-mnist" class="figure-number">9</a></p>
         This animation shows the effect of an agent thinking it can use a thicker brush than it actually can.
     </figcaption>
     <div class="l-body" style="height: 100%; display: flex; justify-content: center;">
@@ -455,8 +460,9 @@
     Notice how the approach requires us to provide only a single human example for each class.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-biased-strokes" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-biased-strokes" class="figure-number">10</a></p>
       This is an animation of the human-generated strokes used to pre-condition the agent. 
       Notice how we only provide a single example per class.
     </figcaption>
@@ -474,7 +480,7 @@
 
   <d-figure class="base-grid" id='Biased-Stroke-Examples' style="padding: 0; border: none;"></d-figure>
   <p class="l-body figcaption">
-    <a href="#figure-biased-stroke-examples" class="figure-number">5</a>:
+    <a href="#figure-biased-stroke-examples" class="figure-number">11</a>:
     The animation shows three images: the target image (left), the neural painter output (center), and the generated brushstrokes transferred back to MyPaint (right).
     Note how the strokes now follow the general order of our human-generated samples.
   </p>
@@ -543,9 +549,10 @@
     This ensures the outputs generalize better by reducing the effect of each individual network's imperfections.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-diff-image-param" class="subgrid">
     <figcaption style="grid-column: kicker">
-      Static figure of a neural painter as a differentiable image parameterization.
+      <p><a href="#figure-diff-image-param" class="figure-number">12</a></p>
+      A neural painter as a differentiable image parameterization.
     </figcaption>
     <div class="l-body">
       <%= require("../static/diagrams/imagenet-vis.svg") %>
@@ -563,7 +570,7 @@
   <figure id="figure-dip-examples" class="base-grid">
     <d-figure style="grid-column: screen;" id="DIP-Examples"></d-figure>
     <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--dip-examples" style="grid-column: text;">
-      <a href="#figure-dip-examples" class="figure-number">7</a>:
+      <a href="#figure-dip-examples" class="figure-number">13</a>:
       A neural painter is used as differentiable parameterization for visualizing ImageNet classes.
     </figcaption>
   </figure>
@@ -580,7 +587,7 @@
   <span id="figure-dip-training" class="figcaption kicker-text-align add-colab-link--section-diff-image-param" style="grid-column: kicker;">
     <p>
       <img class="pointer" src="images/pointer.svg"><br/>
-      <a href="#figure-dip-training" class="figure-number">8</a>:
+      <a href="#figure-dip-training" class="figure-number">14</a>:
       <span>Visualizing ImageNet classes. <em>Control each video by hovering, or tapping it if you are on a mobile device.</em></span>
     </p>
   </span>
@@ -602,8 +609,9 @@
     in neural style transfer.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-intrinsic-style-transfer" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-intrinsic-style-transfer" class="figure-number">15</a></p>
       Intrinsic style transfer
     </figcaption>
     <div class="l-body">
@@ -620,7 +628,7 @@
   <figure id="figure-style-transfer-examples">
   <d-figure id='Style-Transfer-Examples' style="padding: 0; border: none;"></d-figure>
   <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--style-transfer-examples" style="grid-column: text;">
-    <a href="#figure-style-transfer-examples" class="figure-number">9</a>:
+    <a href="#figure-style-transfer-examples" class="figure-number">16</a>:
     Note how the strokes appear to be generated on multiple grids.
     Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
   </figcaption>
