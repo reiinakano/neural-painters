@@ -317,22 +317,6 @@
     SPIRAL's first few strokes are completely occluded by future strokes, while this does not happen with strokes produced by our agent.
   </p>
 
-  <p>
-    We have ported some of these agents to TensorFlow.js so you can use your own input and observe the agent "paint" them.
-  </p>
-
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      An interesting interactive diagram would be letting a user generate their own target image. 
-      For MNIST/KMNIST, the user could draw strokes as in the handwriting article. 
-      Alternatively, the user could upload an image or take a picture and the CelebA agent could attempt to draw it. 
-      This will only work if the agent and neural painter are small enough to be run on TF.js.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
-
   <h3>
     The effect of discrete actions
   </h3>
