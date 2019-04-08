@@ -172,10 +172,10 @@
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
-      Static diagram for VAE neural painter architecture.
+      VAE neural painter architecture.
     </figcaption>
     <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+      <%= require("../static/diagrams/vae-neural-painter.svg") %>
     </div>
   </figure>
 
@@ -220,10 +220,10 @@
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
-      Static diagram for GAN neural painter architecture.
+      GAN neural painter architecture.
     </figcaption>
     <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+      <%= require("../static/diagrams/gan-neural-painter2.svg") %>
     </div>
   </figure>
 
@@ -285,10 +285,10 @@
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
-      Static diagram showing adversarial training setup.
+      Adversarial training of agent for reconstruction.
     </figcaption>
     <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+      <%= require("../static/diagrams/spiral-setup.svg") %>
     </div>
   </figure>
 
@@ -316,22 +316,6 @@
     This can be observed qualitatively by comparing the strokes produced by these agents on the CelebA dataset.
     SPIRAL's first few strokes are completely occluded by future strokes, while this does not happen with strokes produced by our agent.
   </p>
-
-  <p>
-    We have ported some of these agents to TensorFlow.js so you can use your own input and observe the agent "paint" them.
-  </p>
-
-  <figure class="subgrid">
-    <figcaption style="grid-column: kicker">
-      An interesting interactive diagram would be letting a user generate their own target image. 
-      For MNIST/KMNIST, the user could draw strokes as in the handwriting article. 
-      Alternatively, the user could upload an image or take a picture and the CelebA agent could attempt to draw it. 
-      This will only work if the agent and neural painter are small enough to be run on TF.js.
-    </figcaption>
-    <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
-    </div>
-  </figure>
 
   <h3>
     The effect of discrete actions
@@ -478,7 +462,7 @@
     </figcaption>
     <div class="l-body" style="height: 100%; display: flex; justify-content: center;">
       <video loop autoplay playsinline muted
-        <source src="images/biased-stroke-examples/examples.mp4" type="video/mp4" style="border: 1px solid #000; height: 100%; width: 100%;"/>
+        <source src="images/biased-stroke-examples/examples2.mp4" type="video/mp4" style="border: 1px solid #000; height: 100%; width: 100%;"/>
         Your browser does not support the video tag.
       </video>
     </div>
@@ -564,7 +548,7 @@
       Static figure of a neural painter as a differentiable image parameterization.
     </figcaption>
     <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+      <%= require("../static/diagrams/imagenet-vis.svg") %>
     </div>
   </figure>
 
@@ -602,7 +586,7 @@
   </span>
   <d-figure id='DIPAnimations'></d-figure>
 
-  <h3>Style transfer without a style image</h3>
+  <h3>Intrinsic style transfer</h3>
 
   <p>
     As a differentiable image parameterization, neural painters aren't limited to visualizing layers of a pre-trained neural network.
@@ -620,17 +604,17 @@
 
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
-      Static diagram.
+      Intrinsic style transfer
     </figcaption>
     <div class="l-body">
-      <%= require("../static/diagrams/general.svg") %>
+      <%= require("../static/diagrams/intrinsic-style-transfer.svg") %>
     </div>
   </figure>
 
   <p>
     Intuitively, this technique lets us find brushstrokes that preserve only the higher-level content in the target image.
-    The effect is that of painting only the meaningful parts of a target image, without caring about pixel-level reconstruction.
-    The "style" is dictated purely by the artistic medium, in this case, brushstrokes.
+    The effect produced is that of painting only the meaningful parts of a target image, without caring about pixel-level reconstruction.
+    The "style" is an <b>intrinsic</b> property dictated purely by the artistic medium, in this case, brushstrokes.
   </p>
 
   <figure id="figure-style-transfer-examples">
