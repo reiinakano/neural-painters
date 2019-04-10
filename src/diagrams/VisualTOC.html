@@ -8,9 +8,11 @@
         <span class="visual-toc-subheading">{section.subtitle}</span>
       {/if}
     </a>
+    <!--
     <a href="{section.colab_url}" class="visual-toc-colab">
       try in a <img alt="Colab" src="images/colab.svg"> notebook
     </a>
+    -->
   </div>
   {/each}
 </nav>
@@ -21,13 +23,13 @@
   counter-reset: toc-heading;
   display: grid;
   grid-auto-flow: dense;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-gap: 16px;
 }
 @media (min-width: 1000px) {
   .visual-toc {
     grid-gap: 8px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
   }
 }
 @media (min-width: 1180px) {

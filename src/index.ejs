@@ -41,31 +41,31 @@
 
 <d-title>
   <h1>Neural Painters</h1>
-  <p>Title is a work in progress</p>
+  <p>A learned differentiable constraint for generating artwork.</p>
   <div class="l-page" id="vtoc"></div>
 </d-title>
 
 <d-article>
 
   <p>
-    There has been a lot of work on using neural networks to generate painting-like images, some of the most notable being style transfer<d-cite key="gatys2015"></d-cite> and GANs, and all their many variations.
+    There has been a lot of work on using neural networks to generate painting-like images, some of the most notable being style transfer<d-cite key="gatys2015"></d-cite> and GANs<d-cite key="goodfellow2014:adversarial"></d-cite>, and all their many variations.
     Most of these techniques generate images by having a network directly calculate the RGB value of each pixel.
   </p>
 
   <p>
-    Recently, there has been significant progress on getting neural networks to generate paintings in a way much closer to how a human actually would - by generating brushstrokes instead of pixels.
-    An example is the work done by Ganin et. al., on SPIRAL, a reinforcement learning agent trained adversarially to learn how to use a real painting program to generate images.
+    Recently, there has been significant progress on getting neural networks to generate paintings in a way much closer to how a human actually would - by generating brushstrokes<d-cite key="xie2013artist"></d-cite><d-cite key="ganin2018synthesizing"></d-cite> instead of pixels.
+    An example is the work done by Ganin et. al.<d-cite key="ganin2018synthesizing"></d-cite>, on SPIRAL, a reinforcement learning agent trained adversarially to learn how to use a real painting program to generate images.
     A neural agent called SPIRAL learns to reconstruct images from CelebA by defining brushstrokes on a canvas.
   </p>
 
   <p>
     Though impressive, the reinforcement adversarial learning framework used by SPIRAL is complex and requires significant computational resources.
-    Recent work by Ha, et. al. and Hafner, et. al. have shown that building a differentiable world model of an environment can drastically reduce computational requirements for reinforcement learning algorithms.
+    Recent work by Ha, et. al.<d-cite key="ha2018recurrent"></d-cite> and Hafner, et. al.<d-cite key="hafner2018learning"></d-cite> have shown that building a differentiable world model of an environment can drastically reduce computational requirements for reinforcement learning algorithms.
   </p>
 
   <p>
     In this article, we explore the concept of <b>neural painters</b>, which are differentiable simulations of a non-differentiable painting program.
-    It should be noted that similar work has been done by Zheng, et. al. on StrokeNet, although our approach is quite different and was developed independently.
+    It should be noted that similar work has been done by Zheng, et. al.<d-cite key="zheng2018strokenet"></d-cite> on StrokeNet, although our approach was developed independently.
   </p>
 
   <p>
@@ -122,7 +122,7 @@
       <td>Brush coordinates</td>
       <td>
         Three Cartesian coordinates on a 2D canvas, defining the brushstroke's shape.
-        The coordinates define a starting point, end point, and an intermediate control point, constituting a quadratic Bezier curve<d-footnote>explanation</d-footnote>.
+        The coordinates define a starting point, end point, and an intermediate control point, constituting a quadratic Bezier curve.
       </td>
     </tr>
   </table>
@@ -157,22 +157,23 @@
   <h3>Training a VAE Neural Painter</h3>
 
   <p>
-    Our first approach is inspired by the two-stage method used by Ha, et al. to learn a world model for a particular environment
-    <d-footnote>A variational autoencoder is used to learn a latent space for all possible frames in an environment.
+    Our first approach is inspired by the two-stage method used by Ha, et al.<d-cite key="ha2018recurrent"></d-cite> to learn a world model for a particular environment
+    <d-footnote>In the original paper, a variational autoencoder<d-cite key="kingma2013auto"></d-cite> is used to learn a latent space for all possible frames in an environment.
     A recurrent neural network is then used to predict the next frame of an environment given an action.</d-footnote>.
   </p>
 
   <p>
-    A variational autoencoder is trained to learn a latent space of brushstrokes.
+    A variational autoencoder<d-cite key="kingma2013auto"></d-cite> is trained to learn a latent space of brushstrokes.
     We then train a separate network to map an action to the point in latent space corresponding to the expected brushstroke.
-    Unlike the World Models paper, we do not need an RNN to map from actions to brushstrokes as there is no relationship between a brushstroke and the previous actions performed on the painting program.
+    Unlike the approach by Ha, et al.<d-cite key="ha2018recurrent"></d-cite>, we do not need an RNN to map from actions to brushstrokes as there is no relationship between a brushstroke and the previous actions performed on the painting program.
   </p>
 
   <p>The diagram for the training process is shown below.</p>
 
-  <figure class="subgrid">
+  <figure id="figure-vae-neural-painter" class="subgrid">
     <figcaption style="grid-column: kicker">
-      VAE neural painter architecture.
+      <p><a href="#figure-vae-neural-painter" class="figure-number">2</a></p>
+      <p>VAE neural painter training</p>
     </figcaption>
     <div class="l-body">
       <%= require("../static/diagrams/vae-neural-painter.svg") %>
@@ -182,7 +183,7 @@
   <p>The video below compares the results of a trained VAE neural painter with the real output of MyPaint.</p>
 
   <span id="figure-number-vae-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
-    <p><a href="#figure-vae-painter-exploration" class="figure-number">2</a></p>
+    <p><a href="#figure-vae-painter-exploration" class="figure-number">3</a></p>
   </span>
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
@@ -205,7 +206,7 @@
   <h3>Training a GAN Neural Painter</h3>
 
   <p>
-    To solve this problem, we turn to another widely popular family of generative models, <b>generative adversarial networks</b>.
+    To solve this problem, we turn to another widely popular family of generative models, <b>generative adversarial networks</b><d-cite key="goodfellow2014:adversarial"></d-cite>.
     GANs have been shown to produce sharper images than VAEs, and this property could help the neural painter produce accurate brushstrokes.
   </p>
 
@@ -214,12 +215,13 @@
     Unlike a regular GAN, we do not inject noise into the input of the generator.
     Instead, we feed the generator the input action and have it map directly to a brushstroke.
     The discriminator is given real and generated action-brushstroke pairs and tries to distinguish whether the pair is valid or not.
-    In this way, it is similar to a conditional GAN.
-    The training process is illustrated in the diagram below.
+    In this way, it is similar to a conditional GAN<d-cite key="mirza2014conditional"></d-cite>.
+    The training process, which uses Wasserstein loss<d-cite key="arjovsky2017wasserstein"></d-cite> with improvements<d-cite key="gulrajani2017improved"></d-cite>, is illustrated in the diagram below.
   </p>
 
-  <figure class="subgrid">
+  <figure id="gan-neural-painter" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-gan-neural-painter" class="figure-number">4</a></p>
       GAN neural painter architecture.
     </figcaption>
     <div class="l-body">
@@ -233,7 +235,7 @@
   </p>
 
   <span id="figure-number-gan-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
-    <p><a href="#figure-gan-painter-exploration" class="figure-number">3</a></p>
+    <p><a href="#figure-gan-painter-exploration" class="figure-number">5</a></p>
   </span>
   <figure class="subgrid">
     <figcaption style="grid-column: kicker">
@@ -260,7 +262,7 @@
   <h2 id='section-recreating-spiral'><a href="#section-recreating-spiral">Recreating SPIRAL results</a></h2>
 
   <p>
-    Ganin, et al. trained a neural agent called SPIRAL to learn to "paint" images by using the constrained action space of a real painting program.
+    Ganin, et al.<d-cite key="ganin2018synthesizing"></d-cite> trained a neural agent called SPIRAL to learn to "paint" images by using the constrained action space of a real painting program.
     In the paper, an agent was trained to paint images from three different datasets: MNIST, Omniglot, and CelebA. 
     As the painting program is non-differentiable, the agent was trained using adversarial reinforcement learning.
   </p>
@@ -271,7 +273,7 @@
   </p>
 
   <p>
-    A neural agent is designed to take an input target image and output a set of actions.
+    Our LSTM-based<d-cite key="hochreiter1997long"></d-cite> neural agent is designed to take an input target image and output a set of actions.
     These output actions are connected directly to the neural painter and mapped to brushstrokes on a canvas.
     The agent's goal is to recreate the input image on the canvas using the constraints that the neural painter imposes.
     The idea is that the agent's outputs can be transferred directly to the real painting program, despite seeing only the neural painter during training.
@@ -283,8 +285,9 @@
     The diagram below shows the full training setup for our agent.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-agent-adversarial" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-agent-adversarial" class="figure-number">6</a></p>
       Adversarial training of agent for reconstruction.
     </figcaption>
     <div class="l-body">
@@ -293,13 +296,13 @@
   </figure>
 
   <p>
-    We test this approach's performance on three datasets: MNIST, KMNIST, and CelebA.
+    We test this approach's performance on three datasets: MNIST, KMNIST<d-cite key="clanuwat2018deep"></d-cite>, and CelebA.
     You can explore the results for our agent in the diagram below:
   </p>
 
   <d-figure class="base-grid" id='SPIRAL-Examples' style="padding: 0; border: none;"></d-figure>
   <p class="l-body figcaption">
-    <a href="#figure-spiral-examples" class="figure-number">4</a>:
+    <a href="#figure-spiral-examples" class="figure-number">7</a>:
     The animation shows three images: the target image (left), the neural painter output (center), and the generated brushstrokes transferred back to MyPaint (right).
     Note the effect of the neural painter type and the number of strokes in the CelebA reconstructions.
   </p>
@@ -337,8 +340,9 @@
     The neural painter must bridge this gap, and it is free to do it however it wants.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-partial-lift" class="subgrid">
     <figcaption style="grid-column: kicker">
+        <p><a href="#figure-partial-lift" class="figure-number">8</a></p>
         This animation shows the effect of lifting the brush "partially" (value between 0 and 1).
         Values between 0 and 1 are undefined and do not exist in the real environment, however, a neural painter must still "dream" up an output.
     </figcaption>
@@ -364,8 +368,9 @@
     One specific example is when the neural painter interpolates a stroke thickness between discrete values, which is "rounded off" to the nearest brushstroke size when transferred to the painting program.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-imperfect-mnist" class="subgrid">
     <figcaption style="grid-column: kicker">
+        <p><a href="#figure-imperfect-mnist" class="figure-number">9</a></p>
         This animation shows the effect of an agent thinking it can use a thicker brush than it actually can.
     </figcaption>
     <div class="l-body" style="height: 100%; display: flex; justify-content: center;">
@@ -455,8 +460,9 @@
     Notice how the approach requires us to provide only a single human example for each class.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-biased-strokes" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-biased-strokes" class="figure-number">10</a></p>
       This is an animation of the human-generated strokes used to pre-condition the agent. 
       Notice how we only provide a single example per class.
     </figcaption>
@@ -474,7 +480,7 @@
 
   <d-figure class="base-grid" id='Biased-Stroke-Examples' style="padding: 0; border: none;"></d-figure>
   <p class="l-body figcaption">
-    <a href="#figure-biased-stroke-examples" class="figure-number">5</a>:
+    <a href="#figure-biased-stroke-examples" class="figure-number">11</a>:
     The animation shows three images: the target image (left), the neural painter output (center), and the generated brushstrokes transferred back to MyPaint (right).
     Note how the strokes now follow the general order of our human-generated samples.
   </p>
@@ -488,12 +494,6 @@
     One way to explain why preconditioning works is that it changes the <b>basins of attraction</b> for the optimization problem.
     For an untrained, randomly initialized agent, the nearest local minimum for the adversarial loss is likely one that keeps stroke order similar, regardless of the target character.
     However, once it has been preconditioned to produce a certain set of strokes for each class, the closest local minimum becomes one that is as similar as possible to those strokes.
-  </p>
-
-  <p>
-    The approach also has the nice side benefit of faster convergence after preconditioning.
-    After all, if the agent has an idea of the correct stroke order, it'll have a much easier time reconstructing a particular digit.
-    The local minimum associated with the correct stroke order will also be closer to ground truth than what an agent would have found otherwise.
   </p>
 
   <p>
@@ -523,12 +523,12 @@
   <h2 id='section-diff-image-param'><a href="#section-diff-image-param">As a Differentiable Image Parameterization</a></h2>
 
   <p>
-    <b>Differentiable image parameterizations</b> are a technique developed by Mordvintsev, et. al. to generate visualizations and art from pre-trained neural networks.
+    <b>Differentiable image parameterizations</b> are a technique developed by Mordvintsev, et. al.<d-cite key="mordvintsev2018differentiable"></d-cite> to generate visualizations and art from pre-trained neural networks.
     Given a network trained on images (usually deep convolutional networks), we attempt to find a 2D image that maximally activates a particular neuron in the network.
     Instead of directly optimizing the individual RGB values of each pixel, we try different image generation processes that map some set of parameters to a 2D image.
     As long as this process is differentiable, we can directly optimize the parameters using backpropagation.
     Depending on the image generation process, the results can be strikingly different and beautiful.
-    In the article, the authors try various parameterizations such as CPPNs, Fourier transforms, and even 3D to 2D mappings.
+    In the article, the authors try various parameterizations such as CPPNs<d-cite key="stanley2007cppn"></d-cite>, Fourier transforms, and even 3D to 2D mappings.
   </p>
 
   <p>
@@ -539,13 +539,14 @@
 
   <p>
     We focus on visualizing the final layer of the pre-trained networks, corresponding to specific ImageNet classes.
-    We find that a good way to improve the outputs is to optimize more than one pre-trained network at the same time<d-footnote>as done by Tom White in his work on Synthetic Abstractions</d-footnote>.
+    We find that a good way to improve the outputs is to optimize more than one pre-trained network at the same time<d-footnote>as done by Tom White in his work on Synthetic Abstractions<d-cite key="white2018"></d-cite></d-footnote>.
     This ensures the outputs generalize better by reducing the effect of each individual network's imperfections.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-diff-image-param" class="subgrid">
     <figcaption style="grid-column: kicker">
-      Static figure of a neural painter as a differentiable image parameterization.
+      <p><a href="#figure-diff-image-param" class="figure-number">12</a></p>
+      A neural painter as a differentiable image parameterization.
     </figcaption>
     <div class="l-body">
       <%= require("../static/diagrams/imagenet-vis.svg") %>
@@ -563,7 +564,7 @@
   <figure id="figure-dip-examples" class="base-grid">
     <d-figure style="grid-column: screen;" id="DIP-Examples"></d-figure>
     <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--dip-examples" style="grid-column: text;">
-      <a href="#figure-dip-examples" class="figure-number">7</a>:
+      <a href="#figure-dip-examples" class="figure-number">13</a>:
       A neural painter is used as differentiable parameterization for visualizing ImageNet classes.
     </figcaption>
   </figure>
@@ -580,7 +581,7 @@
   <span id="figure-dip-training" class="figcaption kicker-text-align add-colab-link--section-diff-image-param" style="grid-column: kicker;">
     <p>
       <img class="pointer" src="images/pointer.svg"><br/>
-      <a href="#figure-dip-training" class="figure-number">8</a>:
+      <a href="#figure-dip-training" class="figure-number">14</a>:
       <span>Visualizing ImageNet classes. <em>Control each video by hovering, or tapping it if you are on a mobile device.</em></span>
     </p>
   </span>
@@ -599,11 +600,12 @@
     <d-footnote>
       To calculate the content loss between a content image and an output image, we take the mean squared error of their respective activations for a particular layer in a pre-trained neural network.
     </d-footnote>
-    in neural style transfer.
+    in neural style transfer<d-cite key="gatys2015"></d-cite>.
   </p>
 
-  <figure class="subgrid">
+  <figure id="figure-intrinsic-style-transfer" class="subgrid">
     <figcaption style="grid-column: kicker">
+      <p><a href="#figure-intrinsic-style-transfer" class="figure-number">15</a></p>
       Intrinsic style transfer
     </figcaption>
     <div class="l-body">
@@ -620,11 +622,22 @@
   <figure id="figure-style-transfer-examples">
   <d-figure id='Style-Transfer-Examples' style="padding: 0; border: none;"></d-figure>
   <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--style-transfer-examples" style="grid-column: text;">
-    <a href="#figure-style-transfer-examples" class="figure-number">9</a>:
+    <a href="#figure-style-transfer-examples" class="figure-number">16</a>:
     Note how the strokes appear to be generated on multiple grids.
     Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
   </figcaption>
   </figure>
+
+  <p>
+    By manually changing the primitives of the brushstroke, we can achieve vastly different styles.
+    Note the difference in outputs by simply constraining the brush to use only grayscale values.
+    Finding new styles by applying different constraints or using different artistic mediums
+    <d-footnote>
+      Constraints could be simple modifications such as changing the color palette or making brushstrokes thinner.
+      We can also completely change the medium and try parameterizations like CPPNs, which have been compared to light paintings<d-cite key="mordvintsev2018differentiable"></d-cite>.
+    </d-footnote>
+    will be an exciting path forward.
+  </p>
 
   <p>
     You can play around with the technique and create your own visualizations easily using the accompanying notebooks.
@@ -636,13 +649,14 @@
 
   <p>
     Constraints are a key element of creativity. 
-    The natural constraints that an artistic medium imposes on the artist give a piece of art a distinct look from others. 
+    The natural constraints that an artistic medium imposes upon the artist give a piece of art a distinct look from others. 
     An artist attempting to paint a scene using oil paints will get a remarkably different result from someone trying to sketch the same scene with a pencil. 
-    In the same sense, a neural agent constrained to use brush strokes will find creative ways to achieve its objective - whether it be recreating digits, painting faces, or maximizing a pretrained network's activations.
+    In the same sense, using a neural painter leads to creative ways to achieve an objective - whether it be recreating digits, painting faces, or maximizing a pretrained network's activations.
   </p>
 
   <p>
-    This article explored the power of neural painters as a differentiable constraint learned from a real painting simulator, but the techniques and ideas introduced can be applied to other mediums, perhaps 3D renderers or animations.
+    This article explored the power of neural painters - a differentiable constraint learned from a non-differentiable real-life constraint.
+    We believe this concept could be extended to different artistic mediums, such as splatter painting, or even 3D sculptures.
   </p>
 
 </d-article>
@@ -650,18 +664,21 @@
 
 
 <d-appendix>
+  <h3>Additional Resources</h3>
+
+  <p><b>Notebooks</b></p>
+
+  <p>
+    Links to Colaboratory notebooks that can be used to reproduce the experiments in this paper.
+  </p>
+
   <h3>Acknowledgments</h3>
   <p>
     We are deeply grateful to...
   </p>
 
   <p>
-    Many of our diagrams are based on...
-  </p>
-
-  <h3>Author Contributions</h3>
-  <p>
-    <b>Research:</b> Alex developed ...
+    Many of our diagrams were repurposed from the Differentiable Image Parameterizations article<d-cite key="mordvintsev2018differentiable"></d-cite>.
   </p>
 
   <p>
