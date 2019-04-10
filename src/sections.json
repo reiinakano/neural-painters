@@ -3,6 +3,6 @@
     { "title": "Training Painter Networks", "colab_url": "", "anchor": "#section-training-painter-networks", "sprite_index": 0  },
     { "title": "Recreating SPIRAL Results", "colab_url": "", "anchor": "#section-recreating-spiral", "sprite_index": 1 },
     { "title": "Learning Human Strokes", "colab_url": "", "anchor": "#section-expert-teaching", "sprite_index": 2 },
-    { "title": "As a Differentiable Image Parameterization", "colab_url": "https://google.com", "anchor": "#section-diff-image-param", "sprite_index": 4 }
+    { "title": "As a Differentiable Image Parameterization", "colab_url": "https://google.com", "anchor": "#section-diff-image-param", "sprite_index": 3 }
   ]
 }
