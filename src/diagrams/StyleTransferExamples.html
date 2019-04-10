@@ -1,5 +1,6 @@
 <figure id="figure-style-transfer-examples">
   <ExampleSelector {spriteUrl} bind:index spriteWidth={204} spriteColumns={3} spriteNumItems={5}></ExampleSelector>
+  Grayscale<input bind:checked=gray type="checkbox">
 
   <div class="video-container">
     <video ref:video class="video" loop autoplay playsinline muted>
@@ -87,11 +88,12 @@ export default {
   data() {
     return {
       spriteUrl: "images/style-transfer-examples/sprites.png",
+      gray: false,
       index: 0,
     }
   },
   computed: {
-    video_src: ({ index }) => "images/style-transfer-examples/" + samples[index].name + ".mp4",
+    video_src: ({ index, gray }) => "images/style-transfer-examples/" + samples[index].name + (gray ? "_gray" : "") + ".mp4",
     text: ({ index }) => samples[index].text,
   },
   methods: {
