@@ -497,12 +497,6 @@
   </p>
 
   <p>
-    The approach also has the nice side benefit of faster convergence after preconditioning.
-    After all, if the agent has an idea of the correct stroke order, it'll have a much easier time reconstructing a particular digit.
-    The local minimum associated with the correct stroke order will also be closer to ground truth than what an agent would have found otherwise.
-  </p>
-
-  <p>
     Although the approach shows promise, it has a lot of room for improvement.
   </p>
 
@@ -633,6 +627,17 @@
     Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
   </figcaption>
   </figure>
+
+  <p>
+    By manually changing the primitives of the brushstroke, we can achieve vastly different styles.
+    Note the difference in outputs by simply constraining the brush to use only grayscale values.
+    Finding new styles by applying different constraints or using different artistic mediums
+    <d-footnote>
+      Constraints could be simple modifications such as changing the color palette or making brushstrokes thinner.
+      We can also completely change the medium and try parameterizations like CPPNs, which have been compared to light paintings<d-cite key="mordvintsev2018differentiable"></d-cite>.
+    </d-footnote>
+    will be an exciting path forward.
+  </p>
 
   <p>
     You can play around with the technique and create your own visualizations easily using the accompanying notebooks.
