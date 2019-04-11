@@ -151,7 +151,7 @@
 <script>
 import Slider from '../components/Slider';
 import ColabLink from '../components/ColabLink.html';
-import { sections } from '../sections.json';
+import { subsections } from '../colab_urls.json';
 export default {
   onupdate({ previous }) {
     console.log('onupdate');
@@ -165,7 +165,7 @@ export default {
       mode: 'normal',
       backgroundMode: 'light',
       backgroundOpacity: 0.5,
-      url: sections[1].colab_url,
+      url: subsections[2].colab_url,
       dataset: 'celeba',
       painter: 'gan',
       strokes: 1

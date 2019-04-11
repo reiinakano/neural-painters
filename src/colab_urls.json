@@ -1,0 +1,10 @@
+{
+  "subsections": [
+    {"colab_url": "https://google.com/1", "title": "training-vae-painters" },
+    {"colab_url": "https://google.com/2", "title": "training-gan-painters" },
+    {"colab_url": "https://google.com/3", "title": "recreating-spiral" },
+    {"colab_url": "https://google.com/4", "title": "towards-human-strokes" },
+    {"colab_url": "https://google.com/5", "title": "visualizing-imagenet" },
+    {"colab_url": "https://google.com/6", "title": "intrinsic-style-transfer" }
+  ]
+}

@@ -182,7 +182,7 @@
 
   <p>The video below compares the results of a trained VAE neural painter with the real output of MyPaint.</p>
 
-  <span id="figure-number-vae-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
+  <span id="figure-number-vae-painter-exploration" class="figcaption kicker-text-align add-colab-link--training-vae-painters" style="grid-column: kicker; margin-top: 20px;">
     <p><a href="#figure-vae-painter-exploration" class="figure-number">3</a></p>
   </span>
   <figure class="subgrid">
@@ -234,7 +234,7 @@
     Although the recreation isn't perfect, we can see that the outputs of the neural painter are "rougher" and more realistic as opposed to the smoothened out VAE brushstrokes.
   </p>
 
-  <span id="figure-number-gan-painter-exploration" class="figcaption kicker-text-align add-colab-link--section-recreating-spiral" style="grid-column: kicker; margin-top: 20px;">
+  <span id="figure-number-gan-painter-exploration" class="figcaption kicker-text-align add-colab-link--training-gan-painters" style="grid-column: kicker; margin-top: 20px;">
     <p><a href="#figure-gan-painter-exploration" class="figure-number">5</a></p>
   </span>
   <figure class="subgrid">
@@ -563,7 +563,7 @@
 
   <figure id="figure-dip-examples" class="base-grid">
     <d-figure style="grid-column: screen;" id="DIP-Examples"></d-figure>
-    <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--dip-examples" style="grid-column: text;">
+    <figcaption class="add-colab-link--visualizing-imagenet" id="figcaption--dip-examples" style="grid-column: text;">
       <a href="#figure-dip-examples" class="figure-number">13</a>:
       A neural painter is used as differentiable parameterization for visualizing ImageNet classes.
     </figcaption>
@@ -578,7 +578,7 @@
     Starting from a random arrangement of brushstrokes, the strokes slowly "bloom" and rearrange themselves into a sample of the class being visualized.
   </p>
 
-  <span id="figure-dip-training" class="figcaption kicker-text-align add-colab-link--section-diff-image-param" style="grid-column: kicker;">
+  <span id="figure-dip-training" class="figcaption kicker-text-align add-colab-link--visualizing-imagenet" style="grid-column: kicker;">
     <p>
       <img class="pointer" src="images/pointer.svg"><br/>
       <a href="#figure-dip-training" class="figure-number">14</a>:
@@ -621,7 +621,7 @@
 
   <figure id="figure-style-transfer-examples">
   <d-figure id='Style-Transfer-Examples' style="padding: 0; border: none;"></d-figure>
-  <figcaption class="add-colab-link--section-diff-image-param" id="figcaption--style-transfer-examples" style="grid-column: text;">
+  <figcaption class="add-colab-link--intrinsic-style-transfer" id="figcaption--style-transfer-examples" style="grid-column: text;">
     <a href="#figure-style-transfer-examples" class="figure-number">16</a>:
     Note how the strokes appear to be generated on multiple grids.
     Although the neural painter is only designed to output 64x64 pixels on a canvas, we can stitch multiple canvases together to achieve an arbitrary resolution, limited only by GPU memory.
@@ -636,7 +636,7 @@
       Constraints could be simple modifications such as changing the color palette or making brushstrokes thinner.
       We can also completely change the medium and try parameterizations like CPPNs, which have been compared to light paintings<d-cite key="mordvintsev2018differentiable"></d-cite>.
     </d-footnote>
-    will be an exciting path forward.
+    will be an exciting research path forward.
   </p>
 
   <p>
