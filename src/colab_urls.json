@@ -1,6 +1,6 @@
 {
   "subsections": [
-    {"colab_url": "https://google.com/1", "title": "training-vae-painters" },
+    {"colab_url": "https://colab.research.google.com/github/reiinakano/diff-painter/blob/master/notebooks/train_vae_painter.ipynb", "title": "training-vae-painters" },
     {"colab_url": "https://google.com/2", "title": "training-gan-painters" },
     {"colab_url": "https://google.com/3", "title": "recreating-spiral" },
     {"colab_url": "https://google.com/4", "title": "towards-human-strokes" },
