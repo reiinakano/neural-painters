@@ -10,6 +10,7 @@ import ColabLink                      from './components/ColabLink.html';
 
 // eagerly initialize vtoc  as it's above the fold
 import { sections } from "./sections.json";
+import { subsections } from "./colab_urls.json";
 const tocNav = document.getElementById('vtoc');
 const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
 
@@ -63,6 +64,7 @@ const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
   })
 }
 
+/*
 function addColabLinks(sections) {
   for (const section of sections) {
     const className = "add-colab-link--" + section.anchor.slice(1);
@@ -75,3 +77,18 @@ function addColabLinks(sections) {
 }
 
 addColabLinks(sections);
+*/
+
+function addColabLinks(urls) {
+  for (const url of urls) {
+    const className = "add-colab-link--" + url.title;
+    console.log('classname', className);
+    const elements = document.getElementsByClassName(className);
+    for (const element of elements) {
+      const data = {target: element, data: { url: url.colab_url }};
+      const colabLink = new ColabLink(data);
+    }
+  }
+}
+
+addColabLinks(subsections);
