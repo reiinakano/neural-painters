@@ -4,7 +4,7 @@ To completely reproduce the paper from scratch, there is technically a logical o
 
 However, since most people will probably only be interested in certain parts of the paper, we have designed them so you will be able to run each part as standalone notebooks. For example, we have provided pre-trained neural painters so you can run the style transfer notebook without having to train your own neural painter.
 
-**Note on code quality** - I will be the first to tell you that the code quality of these notebooks is terrible. If you have any questions or trouble understanding the code, please feel free to open an issue and ask. If you are here solely to judge what my production code looks like, please look at [my other repositories](https://github.com/reiinakano).
+**Note on code quality** - I will be the first to tell you that the code quality of these notebooks is not production-level. If you have any questions or trouble understanding the code, please feel free to open an issue and ask.
 
 # Notebook descriptions
 
