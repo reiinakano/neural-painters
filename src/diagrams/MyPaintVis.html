@@ -16,10 +16,10 @@
       <input bind:value="color" type="color" id="head" name="head" value="#e66465">
     </div>
     <div>
-        <button on:click="set({randIdx: (randIdx+1)%3})">Recalculate</button>
+        <button on:click="buttonWasPressed()">{button_text}</button>
     </div>
   </div>
-  <img ref:image hidden src={img_src} alt="">
+  <img ref:image hidden src="images/mypaint-vis/strokes/output.jpg" alt="">
   <canvas on:click="handleClick(event)" class="stroke-canvas" ref:canvas id="stroke" width="256" height="256"></canvas>
 </div>
   
@@ -61,6 +61,34 @@
     [32, 56]
   ]
 
+
+  function preloadMapping() {
+    const strings = [];
+    for (let end of END_LIST.values()) {
+      for (let control of CONTROL_LIST.values()) {
+        for (let size of [0, 1, 2, 3].values()) {
+          for (let startPressure of [0, 1, 2, 3].values()) {
+            for (let endPressure of [0, 1, 2, 3].values()) {
+              for (let randIdx of [0, 1, 2].values()) {
+                const newString = [end[0], end[1], control[0], control[1], size, startPressure, endPressure, randIdx].join("_");
+                strings.push(newString);
+              }
+            }
+          }
+        }
+      }
+    }
+    strings.sort();
+
+    const stringToIdx = {};
+    strings.map((value, idx) => {
+      stringToIdx[value] = idx;
+    });
+    return stringToIdx;
+  }
+
+  const STRING_TO_IDX = preloadMapping();
+
   function check_distance_within_limit(pointA, pointB, limit) {
     return limit > Math.sqrt((pointA[0]-pointB[0])**2 + (pointA[1]-pointB[1])**2);
   }
@@ -96,6 +124,7 @@
 
       this.refs.image.onload = () => {
         this.drawCanvas();
+        this.buttonWasPressed();
       }
     },
 
@@ -185,9 +214,9 @@
       },
 
       convertAndDrawImage() {
-        const { color } = this.get();
+        const { color, sprite_index } = this.get();
 
-        this.ctx.drawImage(this.refs.image, 0, 0, 256, 256);
+        this.ctx.drawImage(this.refs.image, sprite_index[0]*64, sprite_index[1]*64, 64, 64, 0, 0, 256, 256);
         const imgdata = this.ctx.getImageData(0, 0, 256, 256);
         const rgba = imgdata.data;
         
@@ -239,7 +268,7 @@
         controlPoint: CONTROL_LIST[0],
         startPressure: 1,
         endPressure: 1,
-        brushSize: 0,
+        brushSize: 1,
         randIdx: 0,
         color: "#e66465",
 
@@ -248,11 +277,16 @@
     },
 
     computed: {
-      img_src: ({endPoint, controlPoint, brushSize, startPressure, endPressure, randIdx}) => {
-        return "images/mypaint-vis/strokes/8_8_"+endPoint[0]+"_"+endPoint[1]+"_"+controlPoint[0]+"_"+controlPoint[1]+"_"+brushSize+"_"+startPressure+"_"+endPressure+"_"+randIdx+".jpg";
+      sprite_index: ({endPoint, controlPoint, brushSize, startPressure, endPressure, randIdx}) => {
+        const newString = [
+          endPoint[0], endPoint[1], 
+          controlPoint[0], controlPoint[1],
+          brushSize, startPressure, 
+          endPressure, randIdx].join("_");
+        const newIdx = STRING_TO_IDX[newString];
+        return [newIdx % 43, Math.floor(newIdx / 43)];
       },
-      // sprite_url: ({sprite_urls, sprite_url_index}) => sprite_urls[sprite_url_index],
-      // sprite_width: ({sprite_url_index}) => sprite_url_index == 0 ? 100 : 300,
+      button_text: ({buttonState}) => (buttonState === 1) ? "play" : "pause"
     },
   }
   </script>
