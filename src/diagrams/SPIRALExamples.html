@@ -18,8 +18,11 @@
       </div>
       <div class="blending-controls">
         <span class="figcaption">No. of strokes</span>
-        <div class:hide="true" class="slider-wrapper"><Slider bind:value="strokes" type="range" min="0" max="2" step="1" ticks=true/></div>
-        <span class="figcaption">{strokesDisplay}</span>
+        <select class:hide="dataset !== 'celeba'" bind:value="strokes">
+          <option value=0>15</option>
+          <option selected value=1>30</option>
+        </select>
+        <span class:hide="dataset === 'celeba'" class="figcaption">{actualStrokes}</span>
       </div>
       <ColabLink :url/>
     </div>
@@ -172,18 +175,18 @@ export default {
     }
   },
   computed: {
-    video_src: ({dataset, painter, strokesDisplay}) => {
-      console.log(dataset, painter, strokesDisplay);
+    video_src: ({dataset, painter, actualStrokes}) => {
+      console.log(dataset, painter, actualStrokes);
       if (dataset === 'celeba') {
-        return "images/spiral-examples/" + dataset + "_" + painter + "_" + strokesDisplay + ".mp4"
+        return "images/spiral-examples/" + dataset + "_" + painter + "_" + actualStrokes + ".mp4"
       } else {
         return "images/spiral-examples/" + dataset + "_" + "vae" + ".mp4"
       }
     },
-    strokesDisplay: ({dataset, strokes}) => {
+    actualStrokes: ({dataset, strokes}) => {
       if (dataset === 'celeba') {
-        //return [15, 30, 50][strokes];
-        return 30
+        return [15, 30][strokes];
+        //return 30
       } else if (dataset === 'kmnist') {
         return 20;
       } else {

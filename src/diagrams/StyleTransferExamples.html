@@ -1,5 +1,5 @@
 <figure id="figure-style-transfer-examples">
-  <ExampleSelector {spriteUrl} bind:index spriteWidth={204} spriteColumns={3} spriteNumItems={5}></ExampleSelector>
+  <ExampleSelector {items} bind:index></ExampleSelector>
   Grayscale<input bind:checked=gray type="checkbox">
 
   <div class="video-container">
@@ -60,24 +60,39 @@ import { sections } from '../sections.json';
 const samples = [
   {
     name: "golden_gate",
-    text: "the Golden Gate Bridge"
+    text: "the Golden Gate Bridge",
+    src: "images/style-transfer-examples/golden_gate.jpg"
   },
   {
     name: "flamingo",
-    text: "a flamingo"
+    text: "a flamingo",
+    src: "images/style-transfer-examples/flamingo.jpg"
   },
   {
     name: "big_ben",
-    text: "Big Ben"
+    text: "Big Ben",
+    src: "images/style-transfer-examples/big_ben.png"
   },
   {
     name: "stata",
-    text: "the Stata Center"
+    text: "the Stata Center",
+    src: "images/style-transfer-examples/stata.jpg"
   },
   {
     name: "eiffel",
-    text: "the Eiffel Tower"
+    text: "the Eiffel Tower",
+    src: "images/style-transfer-examples/eiffel.jpg"
   },
+  {
+    name: "fuji",
+    text: "Mt. Fuji",
+    src: "images/style-transfer-examples/fuji.jpg"
+  },
+  {
+    name: "notre_dame",
+    text: "the Notre Dame",
+    src: "images/style-transfer-examples/notre_dame.jpg"
+  }
 ];
 
 export default {
@@ -87,9 +102,9 @@ export default {
   },
   data() {
     return {
-      spriteUrl: "images/style-transfer-examples/sprites.png",
       gray: false,
       index: 0,
+      items: samples,
     }
   },
   computed: {
