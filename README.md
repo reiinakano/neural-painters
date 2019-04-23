@@ -1,1 +1,1 @@
-
+There are runnable notebooks for the paper [Neural Painters: A learned differentiable constraint for generating brushstroke paintings](https://arxiv.org/abs/1904.08410) in the [`notebooks/`](https://github.com/reiinakano/neural-painters/tree/master/notebooks) folder.
