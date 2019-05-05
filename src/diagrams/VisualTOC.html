@@ -26,10 +26,17 @@
 
 
 <script>
+const VIDEOS = [
+  "images/banner-vids/itsu.mp4",
+  "images/banner-vids/falls.mp4",
+  "images/banner-vids/sydney.mp4",
+  "images/banner-vids/pyramids.mp4"
+];
+
 export default {
   data() {
     return {
-      video_src: "images/banner-vids/itsu.mp4"
+      video_src: VIDEOS[Math.floor(Math.random() * VIDEOS.length)]
     }
   }
 }
