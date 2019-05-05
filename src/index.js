@@ -12,7 +12,7 @@ import ColabLink                      from './components/ColabLink.html';
 import { sections } from "./sections.json";
 import { subsections } from "./colab_urls.json";
 const tocNav = document.getElementById('vtoc');
-const visualTOC = new VisualTOC({target: tocNav, data: {sections: sections}});
+const visualTOC = new VisualTOC({target: tocNav});
 
 // lazily initialize any diagram below the fold. E.G:
 // {
