@@ -48,14 +48,22 @@
 <d-article>
 
   <p>
-    There has been a lot of work on using neural networks to generate painting-like images, some of the most notable being style transfer<d-cite key="gatys2015"></d-cite> and GANs<d-cite key="goodfellow2014:adversarial"></d-cite>, and all their many variations.
+    There has been much work on using neural networks to generate painting-like images, some of the most notable being style transfer<d-cite key="gatys2015"></d-cite> and GANs <d-cite key="goodfellow2014:adversarial"></d-cite>, and all their many variations <d-cite key="elgammal2017can"></d-cite><d-cite key="jing2017neural"></d-cite><d-cite key="Gatys_2016_CVPR"></d-cite>. 
     Most of these techniques generate images by having a network directly calculate the RGB value of each pixel.
   </p>
 
+  <p>However, artists don't paint by generating each individual pixel, they paint by generating <i>brushtrokes</i>.</p>
+
   <p>
-    Recently, there has been significant progress on getting neural networks to generate paintings in a way much closer to how a human actually would - by generating brushstrokes<d-cite key="xie2013artist"></d-cite><d-cite key="ganin2018synthesizing"></d-cite> instead of pixels.
+    As early as 1990<d-cite key="haeberli1990paint"></d-cite>, long before the sudden popularity of deep learning<d-cite key="lecun2015deep"></d-cite>, there has been extensive work on automatically finding a set of brushstrokes to “paint” images<d-cite key="haeberli1990paint"></d-cite><d-cite key="shiraishi2000algorithm"></d-cite><d-cite key="hertzmann1998painterly"></d-cite><d-cite key="winkenbach1994computer"></d-cite>. 
+    <i>Stroke-based rendering</i> (SBR) is the field of digitally generating paintings by arranging brushstrokes on a canvas according to some optimization goal<d-cite key="hertzmann2003survey"></d-cite>. 
+    The simple idea of using actual brushstrokes gives the outputs of SBR algorithms a very real painting-like texture.
+  </p>
+
+  <p>
+    Recently, there has been significant progress on getting neural networks to produce paintings by generating brushstrokes <d-cite key="xie2013artist"></d-cite><d-cite key="ganin2018synthesizing"></d-cite><d-cite key="frans2018unsupervised"></d-cite> instead of pixels.
     An example is the work done by Ganin et. al.<d-cite key="ganin2018synthesizing"></d-cite>, on SPIRAL, a reinforcement learning agent trained adversarially to learn how to use a real painting program to generate images.
-    A neural agent called SPIRAL learns to reconstruct images from CelebA by defining brushstrokes on a canvas.
+    A neural agent called SPIRAL learns to reconstruct images from MNIST, Omniglot, and CelebA by defining brushstrokes on a canvas.
   </p>
 
   <p>
@@ -65,12 +73,29 @@
 
   <p>
     In this article, we explore the concept of <b>neural painters</b>, which are differentiable simulations of a non-differentiable painting program.
-    It should be noted that similar work has been done by Zheng, et. al.<d-cite key="zheng2018strokenet"></d-cite> on StrokeNet, although our approach was developed independently and uses a different painting program.
+    Our contributions are as follows:
   </p>
 
-  <p>
-    This post explores neural painters' strengths and weaknesses, training methods, and some of the more interesting things that can be achieved with them.
-  </p>
+  <ul>
+    <li>
+      First, we present two ways of training a neural painter using VAEs and GANs, respectively. 
+      We then recreate SPIRAL's CelebA reconstruction results<d-cite key="ganin2018synthesizing"></d-cite> using a non-reinforcement learning adversarial approach with a neural painter. 
+      Concurrent to our work, similar work on training neural painters was done by Zheng, et. al.<d-cite key="zheng2018strokenet"></d-cite> on StrokeNet, though our approach uses a different painting program and training methodology.
+      We also propose a simple method based on preconditioning to encourage this agent to follow human strokes when reconstructing digits.
+    </li>
+
+    <li>
+      In addition, we also propose the use of a neural painter as a differentiable image parameterization<d-cite key="mordvintsev2018differentiable"></d-cite>. 
+      By directly optimizing brushstrokes using backpropagation, we open up a powerful new way to visualize pre-trained image classifiers, by allowing them to “paint” classes they were trained to identify.
+    </li>
+
+    <li>
+      Finally, we combine neural painters with neural style transfer<d-cite key="gatys2015"></d-cite>. 
+      By optimizing brushstrokes to minimize only the content loss, we can "paint" the higher-level features of a target image. 
+      The artistic medium, in this case, brushstrokes, dictates the style of the resulting image. 
+      We call this method <i>intrinsic style transfer</i>.
+    </li>
+  </ul>
 
   <hr/>
   <p class="figcaption kicker-text-align" style="grid-column: kicker; margin-top: 20px;">
@@ -80,7 +105,7 @@
 
   <p>
     The main role of a neural painter is to serve as a fully differentiable simulation of a particular painting program.
-    In this article, we use an open source painting program called <a href="http://mypaint.org">MyPaint</a>, which is the same program used by SPIRAL.
+    In this article, we use an open source non-deterministic painting program called <a href="http://mypaint.org">MyPaint</a><d-cite key="mypaint"></d-cite>, which is the same program used by SPIRAL.
   </p>
 
   <p>
@@ -497,12 +522,9 @@
   </p>
 
   <p>
-    Although the approach shows promise, it has a lot of room for improvement.
-  </p>
-
-  <p>
-    It relies on us knowing the correct class label for each image.
-    Without this information, we won't be able to tell the agent to use a certain stroke order for a particular digit, simply because we don't know what digit it is.
+    Although the approach shows promise, there is much room for improvement. 
+    Preconditioning relies on us knowing the correct class label for each image. 
+    Without this information, we will not be able to tell the agent to use a certain stroke order for a particular digit, simply because we do not know what digit it is.
   </p>
 
   <p>
@@ -528,7 +550,7 @@
     Instead of directly optimizing the individual RGB values of each pixel, we try different image generation processes that map some set of parameters to a 2D image.
     As long as this process is differentiable, we can directly optimize the parameters using backpropagation.
     Depending on the image generation process, the results can be strikingly different and beautiful.
-    In the article, the authors try various parameterizations such as CPPNs<d-cite key="stanley2007cppn"></d-cite>, Fourier transforms, and even 3D to 2D mappings.
+    Various parameterizations such as CPPNs<d-cite key="stanley2007cppn"></d-cite>, Fourier transforms, and even 3D to 2D mappings were demonstrated in Mordvintsev, et. al.<d-cite key="mordvintsev2018differentiable"></d-cite>
   </p>
 
   <p>
@@ -595,7 +617,7 @@
   </p>
 
   <p>
-    One such effect is style transfer without a specific style image.
+    One such effect is stroke-based painterly rendering<d-cite key="hertzmann2003survey"></d-cite> of a target image.
     With this method, we optimize brushstrokes to minimize <b>only</b> the content loss
     <d-footnote>
       To calculate the content loss between a content image and an output image, we take the mean squared error of their respective activations for a particular layer in a pre-trained neural network.
@@ -634,6 +656,7 @@
     Finding new styles by applying different constraints or using different artistic mediums
     <d-footnote>
       Constraints could be simple modifications such as changing the color palette or making brushstrokes thinner.
+      A good place to start looking for interesting brushstroke constraints is the extensive literature available on stroke-based rendering<d-cite key="hertzmann2003survey"></d-cite>
       We can also completely change the medium and try parameterizations like CPPNs, which have been compared to light paintings<d-cite key="mordvintsev2018differentiable"></d-cite>.
     </d-footnote>
     will be an exciting research path forward.
