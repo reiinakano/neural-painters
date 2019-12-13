@@ -17,7 +17,7 @@
     "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.29.0",
     "lucid-components": "0.0.6",
-    "npm": "^6.4.1",
+    "npm": "^6.13.4",
     "raw-loader": "^0.5.1",
     "svelte": "^2.13.2",
     "svelte-extras": "^2.0.0",
