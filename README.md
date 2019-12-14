@@ -10,6 +10,8 @@ We explore neural painters, a generative model for brushstrokes learned from a r
 
 ## Notebooks
 
+### NOTE: THERE ARE NEWER AND MORE READABLE NOTEBOOKS + A LIBRARY AVAILABLE AT https://github.com/reiinakano/neural-painters-pytorch
+
 There are runnable notebooks for the paper in the [`notebooks/`](https://github.com/reiinakano/neural-painters/tree/master/notebooks) folder.
 
 To completely reproduce the paper from scratch, there is technically a logical order in which to run these notebooks. 
