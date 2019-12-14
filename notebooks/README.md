@@ -1,3 +1,5 @@
+# NOTE: THERE ARE NEWER AND MORE READABLE NOTEBOOKS + A LIBRARY AVAILABLE AT https://github.com/reiinakano/neural-painters-pytorch
+
 This folder contains notebooks for reproducing the experiments in "An Exploration of Neural Painters: A Learned Differentiable Constraint for Generating Brushstroke Paintings" (https://arxiv.org/abs/1904.08410).
 
 To completely reproduce the paper from scratch, there is technically a logical order in which to run these notebooks. 
