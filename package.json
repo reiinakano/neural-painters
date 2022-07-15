@@ -19,7 +19,7 @@
     "lucid-components": "0.0.6",
     "npm": "^6.4.1",
     "raw-loader": "^0.5.1",
-    "svelte": "^2.13.2",
+    "svelte": "^3.49.0",
     "svelte-extras": "^2.0.0",
     "svelte-loader": "~2.8.1",
     "svg-inline-loader": "^0.8.0",
